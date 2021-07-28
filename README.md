@@ -1,1 +1,1 @@
-# ResidentConnect
+# ResidentConnect Application for Capstone Project
