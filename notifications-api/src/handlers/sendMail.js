@@ -17,14 +17,14 @@ async function sendMail(event, context){
         id:uuid(),
         subject,
         body,
-        recipient,
+        recipient:recipient.split(';'),
         sendAt:now.toISOString(),  
 
     };
     try{
 
     console.log(`send message to ${process.env.MAIL_QUEUE_URL}`);
-    
+
     await dynamodb.put({
         TableName: process.env.MESSAGES_TABLE_NAME,
         Item: msg
@@ -33,7 +33,7 @@ async function sendMail(event, context){
         QueueUrl: process.env.MAIL_QUEUE_URL,
         MessageBody: JSON.stringify({
             subject,
-            recipient,
+            recipient:recipient.split(';'),
             body
         }),
     }).promise();

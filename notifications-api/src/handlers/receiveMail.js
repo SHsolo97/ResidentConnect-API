@@ -16,7 +16,7 @@ async function receiveMail(event, context)
      
      Source:'agni1984@gmail.com',
      Destination:{
-       ToAddresses: [recipient]
+       ToAddresses: recipient
      },
      Message:
      {
