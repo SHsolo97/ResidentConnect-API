@@ -20,26 +20,43 @@ provider:
   runtime: nodejs12.x
   memorySize: 256
   region: ap-south-1
+  environment:
+    MESSAGES_TABLE_NAME: ${self:custom.MessagesTable.name}
+    MAIL_QUEUE_URL: ${self:custom.mailQueue.url}
   stage: ${opt:stage, 'dev'}
   iamRoleStatements:
     - ${file(iam/SendMailIAM.yml):SendMailIAM}
+    - ${file(iam/MailQueueIAM.yml):MailQueueIAM}
+    - ${file(iam/MessagesTableIAM.yml):MessagesTableIAM}
 
 resources:
   Resources:
     MailQueue: ${file(resources/MailQueue.yml):MailQueue}
+    MessagesTable: ${file(resources/MessagesTable.yml):MessagesTable}
   Outputs:
     MailQueueArn:  ${file(resources/MailQueue.yml):Outputs.MailQueueArn}
     MailQueueUrl:  ${file(resources/MailQueue.yml):Outputs.MailQueueUrl}
+    
   
 functions:
   sendMail:
     handler: src/handlers/sendMail.handler
+    events:
+      - http:
+          method: POST
+          path: /sendMail
+          cors: true
+  receiveMail:
+    handler: src/handlers/receiveMail.handler
     events:
       - sqs:
           arn: ${self:custom.mailQueue.arn}
           batchSize: 1
 
 custom:
+  MessagesTable:
+    name: !Ref MessagesTable
+    arn: !GetAtt MessagesTable.Arn
   mailQueue:
     name: MailQueue-${self:provider.stage}
     arn: !GetAtt MailQueue.Arn

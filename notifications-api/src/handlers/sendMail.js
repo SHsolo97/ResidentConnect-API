@@ -1,49 +1,57 @@
+import { v4 as uuid } from 'uuid';
 import AWS from 'aws-sdk';
+import createError from 'http-errors';
+import commonMiddleware from '../lib/commonMiddleware';
+const sqs = new AWS.SQS();
 
-const ses = new AWS.SES({region:'ap-south-1'});
+const dynamodb=new AWS.DynamoDB.DocumentClient();
 
-async function sendMail(event, context) 
-{
+async function sendMail(event, context){
 
-   const record = event.Records[0];
-   console.log('record processing..',record)
+    const {subject,body,recipient}=event.body;
+
+    const now=new Date();
+  
+
+    const msg={
+        id:uuid(),
+        subject,
+        body,
+        recipient,
+        sendAt:now.toISOString(),  
+
+    };
+    try{
+
+    console.log(`send message to ${process.env.MAIL_QUEUE_URL}`);
+    
+    await dynamodb.put({
+        TableName: process.env.MESSAGES_TABLE_NAME,
+        Item: msg
+    }).promise();
+    await sqs.sendMessage({
+        QueueUrl: process.env.MAIL_QUEUE_URL,
+        MessageBody: JSON.stringify({
+            subject,
+            recipient,
+            body
+        }),
+    }).promise();
+    }
+
    
-   const email=JSON.parse(record.body);
-   const {subject, body, recepient}= email;
+    catch(err)
+    {
+        console.log(err);
+        throw new createError.InternalServerError(error);
+    }
+    return{
+        statusCode:201,
+        body: JSON.stringify(msg),
+    };
 
 
-   const params={
-     
-     Source:'agni1984@gmail.com',
-     Destination:{
-       ToAddresses: [recepient]
-     },
-     Message:
-     {
-       Body:{
-         Text:{
-           Data: body,
-         },
-       },
-     
-     Subject:
-     {
-       Data: subject,
-     },
-     },
-   }
-   try{
-      const result=await ses.sendEmail(params).promise();
-      console.log(result);
-      return(result);
-   }
-   catch(err)
-   {
-     console.log(err);
-   }
- 
+
 }
 
-export const handler = sendMail;
-
-
+export const handler = commonMiddleware(sendMail);
