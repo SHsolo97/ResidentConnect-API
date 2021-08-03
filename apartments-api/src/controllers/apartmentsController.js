@@ -1,43 +1,83 @@
-var ObjectId = require('mongodb').ObjectID;
-var mongoose = require('mongoose');
+const { validationResult } = require('express-validator');
 
-//Set up default mongoose connection
-var mongoDB = 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority';
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const HttpError = require('../models/http-error');
+const mongoose = require('mongoose');
+
+const Apartment = require('../models/apartment');
+const Community = require('../models/community');
 
 
-exports.apartments_list = async function(req, res) {
+
+exports.apartments_list = async function(req, res,next) {
     const communityid=req.params.communityid;
-    const data = await db.collection('apartments').find({"communityid": new ObjectId(communityid)}).toArray();
-    res.status(400).send(data);
+    //const data = await db.collection('apartments').find({"communityid": new ObjectId(communityid)}).toArray();
+    //res.status(400).send(data);
+
+    let apartments,count;
+    try {
+        apartments = await Apartment.find({'communityid':communityid});
+        count = await Apartment.find({'communityid':communityid}).countDocuments();
+    } catch (err) {
+      const error = new HttpError(
+        `Fetching apartments failed for community ${communityid},  please try again later.`,
+        500
+      );
+      return next(error);
+    }
+  
+
+    res.json({count: count, apartments: apartments.map(apartment => apartment.toObject({ getters: true }))});
 };
 
-exports.apartment_details = async function(req, res) {
+exports.apartment_details = async function(req, res,next) {
     const communityid=req.params.communityid;
     const apartmentid=req.params.apartmentid;  
-    const data = await db.collection('apartments').find({"communityid": new ObjectId(communityid),"_id": new ObjectId(apartmentid)}).toArray();
-    res.status(400).send(data);
+    let apartment;
+    try{
+        apartment=await Apartment.find({'communityid':communityid , '_id':apartmentid});
+    }
+    catch (err) {
+        const error = new HttpError(
+          `Something went wrong, could not find a apartment -${apartmentid} from community- ${communityid}`,
+          500
+        );
+        return next(error);
+      }
+
+      
+  if (!apartment) {
+    const error = new HttpError(
+      'Could not find a apartment for the provided id.',
+      404
+    );
+    return next(error);
+  }  
+  res.json(apartment.toObject({ getters: true }) );
+
 };
 
+
+exports.apartment_create_post = async function(req, res,next) {
+     const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return next(
+          new HttpError('Invalid inputs passed, please check your data.', 422)
+        );
+      }
+      const communityid=req.params.communityid;  
+      const apartment=new Apartment(req.body);
+      apartment.communityid=communityid;
+      const sess = await mongoose.startSession();
+        sess.startTransaction();
+        
+        await apartment.save({ session: sess });
+        await sess.commitTransaction();
+    
+   res.status(201).json({ apartment });
+
+};
 exports.apartment_update = async function(req, res) {
     const communityid=req.params.communityid;  
     res.status(400).send({});
-
-};
-
-exports.apartment_create_post = async function(req, res) {
-    const communityid=req.params.communityid;  
-    const apartment=req.body;
-    apartment.communityid=new ObjectId(communityid);
-    //console.log(model);
-    db.collection('apartments').insertOne(model)   
-    .then(result => {
-     res.status(201).send(model);
-    })
-    .catch(error => console.error(error))
-
-  
 
 };

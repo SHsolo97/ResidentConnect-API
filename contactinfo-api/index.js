@@ -1,28 +1,41 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const { randomBytes } = require('crypto');
-const cors = require('cors');
-const axios = require('axios');
+const mongoose = require('mongoose');
+
+const contactinfoRouter = require('./src/routes/contactinfo');
+
+
+
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
-const contacts = {};
 
-app.get('/api/contacts', (req, res) => {
-    res.send(contacts);
+//app.set('trust proxy',true);
 
-});
-app.post('/api/contacts/create',async (req, res) => {
-    const id = randomBytes(4).toString('hex');
-    const { type,name,phone } = req.body;
-    contacts[id] = {
-        id,type,name,phone
+//app.use(apartmentmodelsRouter);
+app.use(contactinfoRouter);
+
+app.use((req, res, next) => {
+    const error = new HttpError('Could not find this route.', 404);
+    throw error;
+  });
+  app.use((error, req, res, next) => {
+    if (res.headerSent) {
+      return next(error);
     }
-  
-    res.status(201).send(contacts[id]);
-});
-app.listen(4001, () => {
+    res.status(error.code || 500);
+    res.json({ message: error.message || 'An unknown error occurred!' });
+  });  
 
-    console.log('Contact Info Service: Listening on 4001');
-});
+
+mongoose
+  .connect('mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority')
+  .then(() => {
+    app.listen(4001,()=>{
+        console.log('Contact Info Service: Listening on 4001');
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });
