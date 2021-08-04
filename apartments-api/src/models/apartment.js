@@ -26,6 +26,8 @@ var apartmentschema = new Schema({
       
     issold : {type: Boolean, default:false,required: true},
     enrolled:{type: Number,  max: 10, required: true,default:0},
+    enrolledby :[ {type: Schema.Types.ObjectId, ref: 'User',required: true}],
+
     status:{
         type: String,
         enum:  ['vacant', 'self-occupied', 'rented out','not-sold'],
