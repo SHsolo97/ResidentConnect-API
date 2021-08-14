@@ -14,6 +14,8 @@ router.post('/api/user/create',user_controller.createUser); //done
 router.patch('/api/user/:uid/apartment/add',user_controller.addApartmentToUser);//done
 router.patch('/api/user/:uid/apartment/remove',user_controller.removeApartmentFromUser);//done
 
+router.patch('/api/user/:uid/event/add',user_controller.addEventToUser);//done
+router.patch('/api/user/:uid/event/remove',user_controller.removeEventFromUser);//done
 
 router.put('/api/user/:uid',user_controller.editUser); //not done
 router.delete('/api/user/:uid',user_controller.deleteUser); //not done

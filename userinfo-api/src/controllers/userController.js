@@ -236,12 +236,7 @@ exports.deleteUser = async function(req, res,next) {
 
   try {
     await user.remove();
-   // const sess = await mongoose.startSession();
-    //sess.startTransaction();
-   // await user.remove({ session: sess });
-   // place.creator.places.pull(place);
-   // await place.creator.save({ session: sess });
-  //  await sess.commitTransaction();
+
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not delete user.',
@@ -249,4 +244,104 @@ exports.deleteUser = async function(req, res,next) {
     );
     return next(error);
 }   
+}
+
+
+exports.addEventToUser= async function(req, res,next) {
+
+    const userid=req.params.uid;
+    const eventid=req.body.eventid;
+    let user;
+ /************* Fetch User by id*************************** */
+    try{
+        user=await User.findById(userid)
+    }
+    catch (err) {
+        const error = new HttpError(
+          `Something went wrong, could not find a user- ${userid}`,
+          500
+        );
+        return next(error);
+      }
+
+      
+  if (!user) {
+    const error = new HttpError(
+      'Could not find a user for the provided id.',
+      404
+    );
+    return next(error);
+  } 
+  
+  
+ 
+  try {
+  
+    const sess = await mongoose.startSession();
+    sess.startTransaction();  
+    user.events.push(eventid);
+    await user.save({ session: sess });    
+    await sess.commitTransaction();
+  
+    
+   
+  } catch (err) {
+      console.log(err);
+    const error = new HttpError(
+      'adding event to user failed, please try again.',
+      500
+    );
+    return next(error);
+  }
+
+  res.json(user.toObject({ getters: true }) );
+}
+
+exports.removeEventFromUser= async function(req, res,next) {
+    const userid=req.params.uid;
+    const eventid=req.body.eventid;
+    let user;
+ /************* Fetch User by id*************************** */
+    try{
+        user=await User.findById(userid)
+    }
+    catch (err) {
+        const error = new HttpError(
+          `Something went wrong, could not find a user- ${userid}`,
+          500
+        );
+        return next(error);
+      }
+
+      
+  if (!user) {
+    const error = new HttpError(
+      'Could not find a user for the provided id.',
+      404
+    );
+    return next(error);
+  } 
+  
+  
+ 
+  try {
+  
+    const sess = await mongoose.startSession();
+    sess.startTransaction();  
+    user.events.pull(eventid);
+    await user.save({ session: sess });    
+    await sess.commitTransaction();
+  
+    
+   
+  } catch (err) {
+      console.log(err);
+    const error = new HttpError(
+      'removing event from user failed, please try again.',
+      500
+    );
+    return next(error);
+  }
+
+  res.json(user.toObject({ getters: true }) );
 }

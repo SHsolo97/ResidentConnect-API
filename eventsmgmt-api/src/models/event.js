@@ -7,9 +7,17 @@ var eventSchema = new Schema({
     communityid : {type: Schema.Types.ObjectId, ref: 'community',required: true},
     name:{type: String,required:true},
     createdAt: { type: Date, default: Date.now() , required: true},
-    organizer: {type: Schema.Types.ObjectId, ref: 'User',required: true},
-    startdate:{type:Date,required:true},
-    enddate:{type:Date,required:true},
+    organizer: {
+        name:{type: String,required:true},
+        email:{type: String,required:true},
+        phone:{type: String,required:true},
+        id:{type: Schema.Types.ObjectId, ref: 'User',required: true}
+    },
+    startdate:{type:String,required:true},
+    enddate:{type:String,required:true},
+    starttime:{type:String,required:true},
+    endtime:{type:String,required:true},
+    timezone:{type:String,required:true},
     mode:{
         type: String,
         enum:  ['online','venue'],
@@ -23,6 +31,7 @@ var eventSchema = new Schema({
         state : {type: String},
         pincode : {type: String}
     },
+    city: {type: String},
     description:{type:String},
     thumbnailimage:{type:String},
     images:[{type:String}],
@@ -35,7 +44,7 @@ var eventSchema = new Schema({
 eventSchema
 .virtual('url')
 .get(function () {
-  return '/community/'+ this.communityid +'/events/' +this._id
+  return '/community/'+ this.communityid +'/event/' +this._id
 });
 // Compile model from schema
 module.exports =mongoose.model('Events', eventSchema );;

@@ -28,7 +28,8 @@ const userSchema = new Schema({
         }
     ],
     
-    apartments: [{type: Schema.Types.ObjectId, ref: 'apartments'}]
+    apartments: [{type: Schema.Types.ObjectId, ref: 'apartments'}],
+    events:[{type: Schema.Types.ObjectId, ref: 'events'}]
 })
 userSchema.plugin(uniqueValidator);
 userSchema
