@@ -128,7 +128,7 @@ exports.addApartmentToUser= async function(req, res,next) {
  
   
   const body={userid:user._id};
-  axios.patch(`http://localhost:4000/api/apartment/${aptid}/user/add`, body)
+  axios.patch(`http://rc-apartments-srv:4000/api/apartment/${aptid}/user/add`, body)
  .then(res => {}
  )
  .catch(err=>{
@@ -194,7 +194,7 @@ exports.removeApartmentFromUser= async function(req, res,next) {
  
   
   const body={userid:user._id};
-  axios.patch(`http://localhost:4000/api/apartment/${aptid}/user/remove`, body)
+  axios.patch(`http://rc-apartments-srv:4000/api/apartment/${aptid}/user/remove`, body)
  .then(res => {}
  )
  .catch(err=>{

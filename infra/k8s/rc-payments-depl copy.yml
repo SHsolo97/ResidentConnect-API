@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rc-payments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rc-payments
+  template:
+    metadata:
+      labels:
+        app: rc-payments
+    spec:
+      containers:
+        - name: rc-payments
+          image: agni1984/rc-payments
+          env:
+            - name: MONGO_URI
+              value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/paymentsinfo?retryWrites=true&w=majority'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rc-payments-srv
+spec:
+  selector:
+    app: rc-payments
+  ports:
+    - name: rc-payments
+      protocol: TCP
+      port: 4012
+      targetPort: 4012

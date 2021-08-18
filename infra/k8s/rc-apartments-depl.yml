@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rc-apartments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rc-apartments
+  template:
+    metadata:
+      labels:
+        app: rc-apartments
+    spec:
+      containers:
+        - name: rc-apartments
+          image: agni1984/rc-apartments
+          env:
+            - name: MONGO_URI
+              value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rc-apartments-srv
+spec:
+  selector:
+    app: rc-apartments
+  ports:
+    - name: rc-apartments
+      protocol: TCP
+      port: 4000
+      targetPort: 4000

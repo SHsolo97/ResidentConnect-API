@@ -134,7 +134,7 @@ exports.enrollToEvent = async function(req, res,next) {
   
   const body={eventid:event._id};
   
-  axios.patch(`http://localhost:4002/api/user/${userid}/event/add`, body)
+  axios.patch(`http://rc-eventsmgmt-srv:4002/api/user/${userid}/event/add`, body)
  .then(res => {}
  )
  .catch(err=>{
@@ -201,7 +201,7 @@ exports.unEnrollToEvent = async function(req, res,next) {
   
   const body={eventid:event._id};
   
-  axios.patch(`http://localhost:4002/api/user/${userid}/event/remove`, body)
+  axios.patch(`http://rc-eventsmgmt-srv:4002/api/user/${userid}/event/remove`, body)
  .then(res => {}
  )
  .catch(err=>{

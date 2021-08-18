@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rc-contactsinfo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rc-contactsinfo
+  template:
+    metadata:
+      labels:
+        app: rc-contactsinfo
+    spec:
+      containers:
+        - name: rc-contactsinfo
+          image: agni1984/rc-contactsinfo
+          env:
+            - name: MONGO_URI
+              value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rc-contactsinfo-srv
+spec:
+  selector:
+    app: rc-contactsinfo
+  ports:
+    - name: rc-contactsinfo
+      protocol: TCP
+      port: 4001
+      targetPort: 4001

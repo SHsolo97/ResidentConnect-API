@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rc-polling-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rc-polling
+  template:
+    metadata:
+      labels:
+        app: rc-polling
+    spec:
+      containers:
+        - name: rc-polling
+          image: agni1984/rc-polling
+          env:
+            - name: MONGO_URI
+              value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/pollinginfo?retryWrites=true&w=majority'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rc-polling-srv
+spec:
+  selector:
+    app: rc-polling
+  ports:
+    - name: rc-polling
+      protocol: TCP
+      port: 4007
+      targetPort: 4007

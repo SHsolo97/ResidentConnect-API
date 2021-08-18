@@ -1,0 +1,114 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: agni1984/rc-apartments
+      context: apartments-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-buyandsell
+      context: buyandsell-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-carpooling
+      context: carpooling-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-classifieds
+      context: classifieds-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-contactsinfo
+      context: contactinfo-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-eventsmgmt
+      context: eventsmgmt-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-polling
+      context: polling-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-facilitybooking
+      context: facilitybooking-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-maintenance
+      context: maintenance-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-users
+      context: userinfo-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-announcements
+      context: announcements-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-visitormgmt
+      context: visitormgmt-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
+    - image: agni1984/rc-payments
+      context: payments-api
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.js'
+            dest: .
