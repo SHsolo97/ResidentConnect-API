@@ -10,6 +10,10 @@ const Advert = require('../models/advert');
 
 
 
+exports.gethealthStatus= async function(req, res,next) {
+  const returnval="Advert service running...";
+    res.status(200).send( returnval);
+}
 
 exports.getAdsList= async function(req, res,next) {
 
@@ -54,7 +58,7 @@ exports.getAdById= async function(req, res,next) {
   res.json(advert.toObject({ getters: true }) );
 }
 
-exports.getAdsByCommunityId= async function(req, res,next) {
+/*exports.getAdsByCommunityId= async function(req, res,next) {
     const communityid=req.params.cid;
 
 
@@ -72,7 +76,7 @@ exports.getAdsByCommunityId= async function(req, res,next) {
   
 
     res.json({count: count, adverts: adverts.map(ad => ad.toObject({ getters: true }))});
-}
+}*/
 
 exports.getAds= async function(req, res,next) {
 }

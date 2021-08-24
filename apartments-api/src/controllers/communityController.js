@@ -58,6 +58,7 @@ exports.getCommunityById = async function(req, res,next) {
 exports.createCommunity =async function(req, res,next) 
 {
  
+  console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return next(

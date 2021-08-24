@@ -2,7 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const cors=require('cors')
 const communityRouter = require('./routes/community');
 //const apartmentmodelsRouter = require('./src/routes/apartmentmodels');
 const apartmentsRouter=require('./routes/apartments');
@@ -12,6 +12,7 @@ const HttpError = require('./models/http-error');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 //app.set('trust proxy',true);
 

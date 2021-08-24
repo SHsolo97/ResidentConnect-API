@@ -4,11 +4,11 @@ const { check } = require('express-validator');
 
 var router = express.Router();
 var carpooling_Controller = require('../controllers/carpoolingController');
+router.get('/api/carpoolings/health-status',carpooling_Controller.gethealthStatus);
 
-router.get('/api/community/:cid/carpoolings',carpooling_Controller.getcarpoolingList); 
-router.get('/api/community/:cid/carpolling/:cid',carpooling_Controller.getcarpoolingById); 
+router.post('/api/carpoolings',carpooling_Controller.getcarpoolings); 
+router.get('/api/carpoolings/:cid',carpooling_Controller.getcarpoolingById); 
 
-router.post('/api/community/:cid/carpollings',carpooling_Controller.getcarpoolingsByTags); 
 
-router.post('/api/carpooling/create',carpooling_Controller.createCarpooling); 
+router.post('/api/carpoolings/create',carpooling_Controller.createCarpooling); 
 module.exports = router;

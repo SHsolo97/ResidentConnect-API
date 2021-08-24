@@ -6,18 +6,15 @@ var facilitybookingSchema = new Schema({
    
     bookingdetails :[
         {
-            day:{type:String},
-            isopen:{type:Boolean},
-            opentime:{type:String},
-            closetime:{type:String},
-            slots:[
+            date:{type:String},
+            slots:
                 {
                     starttime:{type:String},
                     endTime:{type:String},
                     bookedBy:{type:String,default:null}
                 
-                }
-            ]
+               }
+            
         }
 
     ] 

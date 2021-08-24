@@ -6,10 +6,13 @@ const mongoose = require('mongoose');
 
 const ContactInfo = require('../models/contact-info');
 
-
+exports.gethealthStatus= async function(req, res,next) {
+  const returnval="contactsinfo service running at port 4001... v0.0.6";
+    res.status(200).send( returnval);
+}
 
 exports.getContactsbyCommunityId = async function(req, res,next) {
-    const communityid=req.params.id;
+    const communityid=req.body.communityid;
     let contactinfos;
     try{
         contactinfos=await ContactInfo.findById(communityid)
@@ -34,8 +37,8 @@ exports.getContactsbyCommunityId = async function(req, res,next) {
 
 }
 exports.createContact = async function(req, res,next) {
-    const communityid=req.params.id;
-    const errors = validationResult(req);
+  const communityid=req.body.communityid;
+  const errors = validationResult(req);
     let contactinfos;
     if (!errors.isEmpty()) {
         return next(
@@ -95,8 +98,8 @@ exports.editContact = async function(req, res,next) {
 }
 
 exports.deleteContact = async function(req, res,next) {
-    const communityid=req.params.id;
-    const contactid=req.params.cid;
+  const communityid=req.body.communityid;
+  const contactid=req.params.cid;
     let contactinfos;
     try{
         contactinfos=await ContactInfo.findById (communityid)

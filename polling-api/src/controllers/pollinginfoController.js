@@ -8,11 +8,15 @@ const mongoose = require('mongoose');
 const pollingInfo = require('../models/polling-info');
 
 
+exports.gethealthStatus= async function(req, res,next) {
+    const returnval="Polling service running...";
+      res.status(200).send( returnval);
+  }
 
 
 
 //router.get('/api/community/:id/pollings',pollinginfo_Controller.getPollingsbyCommunityId);
-exports.getPollingsbyCommunityId = async function(req, res,next) {
+exports.getPollings = async function(req, res,next) {
    
 
 }

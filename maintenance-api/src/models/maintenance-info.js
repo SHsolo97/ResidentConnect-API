@@ -17,8 +17,8 @@ var maintenanceinfoSchema = new Schema({
     closedat:{type:Date},
     assignedto:{type:String},
     servicecharge:{type:Decimal128},
-    materialcharge:{type:Decimal128},
-    Totalcharge:{Type:Decimal128}
+    materialcharge:{type:Decimal128}
+ 
     
 });
 

@@ -8,7 +8,7 @@ var classifiedsCommentsInfoSchema = new Schema({
   
     comments:[        
         {
-        username:{type:String},
+        givenby:{type:String},
         rating:{type:Number,default:0},
         comment:{type: String}
        }]

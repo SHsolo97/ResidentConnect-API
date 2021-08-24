@@ -13,7 +13,9 @@ var visitorsinfoSchema = new Schema({
         name:{type:String},
         phone:{type:String},
         purpose:{type:String}
-    }
+    },
+    isEntryAllowed:{type:String}
+
     
 });
 

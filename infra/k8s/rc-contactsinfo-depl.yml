@@ -1,7 +1,10 @@
+#kubectl apply -f rc-contactsinfo-depl.yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rc-contactsinfo-depl
+  labels:
+    app: rc-contactsinfo
 spec:
   replicas: 1
   selector:
@@ -14,7 +17,9 @@ spec:
     spec:
       containers:
         - name: rc-contactsinfo
-          image: agni1984/rc-contactsinfo
+          image: agni1984/rc-contactsinfo:v0.0.6          
+          ports: 
+            - containerPort: 4001 
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority'
@@ -23,11 +28,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rc-contactsinfo-srv
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /contacts/health-status
 spec:
+  type: NodePort
   selector:
     app: rc-contactsinfo
   ports:
-    - name: rc-contactsinfo
-      protocol: TCP
+    - name: rc-contactsinfo      
       port: 4001
       targetPort: 4001
