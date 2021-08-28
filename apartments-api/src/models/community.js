@@ -7,23 +7,40 @@ var communitySchema = new Schema({
     builder: {type: String,required: true},
     createdAt: { type: Date, default: Date.now() , required: true},
     address : {
-      addressline : {type: String,required: true},
-      area : {type: String, required: true},
-      city: {type: String,required: true},
-      state : {type: String,required: true},
-      pincode : {type: String, required: true}
+      addressline : {type: String},
+      area : {type: String},
+      city: {type: String},
+      state : {type: String},
+      pincode : {type: String}
 },
-blocks:{type:Number},
+modeldetails:[
+  {
+    name: {type: String,required: true},
+    area:{
+      carpetarea:{type: Number},
+      builduparea:{type: Number},
+      superbuilduparea:{type: Number}
+    },
+    rooms : {
+      bedrooms : {type: Number},
+      bathrooms :{type: Number},
+      balconies: {type: Number},
+      kitchens : {type: Number},
+      halls :{type: Number},
+      otherrooms:{type: Number}
+  }
+  }
+],
 blockdetails:[
   {
       block: {type: String},
-      floors: {type:Number},
-      flats:{type:Number},
+      floors: {type:Number,default: 0, required: true},
+      flats:{type:Number,default: 0, required: true},
       floordetails:
       [
           {
               floor:{type:Number},
-              flats:[{type: Schema.Types.ObjectId, ref: 'apartments',required: true}]
+              flats:[{type: Schema.Types.ObjectId, ref: 'apartments'}]
           }              
       ]
   }
@@ -37,5 +54,4 @@ communitySchema
   return '/community/' + this._id;
 });
 // Compile model from schema
-var communityModel = mongoose.model('communities', communitySchema );
-module.exports =communityModel;
+module.exports =mongoose.model('Communities', communitySchema );;

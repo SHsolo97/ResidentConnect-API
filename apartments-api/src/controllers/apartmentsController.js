@@ -1,43 +1,244 @@
-var ObjectId = require('mongodb').ObjectID;
-var mongoose = require('mongoose');
+const { validationResult } = require('express-validator');
 
-//Set up default mongoose connection
-var mongoDB = 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority';
-mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const HttpError = require('../models/http-error');
+const mongoose = require('mongoose');
+
+const Apartment = require('../models/apartment');
+
+const Community = require('../models/community');
 
 
-exports.apartments_list = async function(req, res) {
+exports.apartments_list = async function(req, res,next) {
     const communityid=req.params.communityid;
-    const data = await db.collection('apartments').find({"communityid": new ObjectId(communityid)}).toArray();
-    res.status(400).send(data);
+    //const data = await db.collection('apartments').find({"communityid": new ObjectId(communityid)}).toArray();
+    //res.status(400).send(data);
+
+    let apartments,count;
+    try {
+        apartments = await Apartment.find({'communityid':communityid});
+        count = await Apartment.find({'communityid':communityid}).countDocuments();
+    } catch (err) {
+      const error = new HttpError(
+        `Fetching apartments failed for community ${communityid},  please try again later.`,
+        500
+      );
+      return next(error);
+    }
+  
+
+    res.json({count: count, apartments: apartments.map(apartment => apartment.toObject({ getters: true }))});
 };
 
-exports.apartment_details = async function(req, res) {
-    const communityid=req.params.communityid;
+exports.apartment_details = async function(req, res,next) {
     const apartmentid=req.params.apartmentid;  
-    const data = await db.collection('apartments').find({"communityid": new ObjectId(communityid),"_id": new ObjectId(apartmentid)}).toArray();
-    res.status(400).send(data);
+    let apartment;
+    try{
+        apartment=await Apartment.findById(apartmentid);
+    }
+    catch (err) {
+        const error = new HttpError(
+          `Something went wrong, could not find a apartment -${apartmentid} from community- ${communityid}`,
+          500
+        );
+        return next(error);
+      }
+
+      
+  if (!apartment) {
+    const error = new HttpError(
+      'Could not find a apartment for the provided id.',
+      404
+    );
+    return next(error);
+  }  
+  res.json(apartment.toObject({ getters: true }) );
+
 };
 
+
+exports.apartment_create_post = async function(req, res,next) {
+     const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return next(
+          new HttpError('Invalid inputs passed, please check your data.', 422)
+        );
+      }
+      const communityid=req.params.communityid;  
+      const apartment=new Apartment(req.body);
+      apartment.communityid=communityid;
+      let query;
+     try{
+          const sess = await mongoose.startSession();
+        sess.startTransaction();
+        //console.log(community);
+        query=await Community.findOne({'_id':communityid,'blockdetails.block':apartment.block}).populate('blockdetails');
+        //console.log(blocks);
+        if(query===null)
+        {
+
+            const error = new HttpError(
+                `Block ${apartment.block} is not defined in community ${communityid}. please add block first.`,
+                500
+              );
+              return next(error);
+        }
+         query=await Community.findOne(
+              {'_id':communityid,'blockdetails.block':apartment.block,'blockdetails.floordetails.floor':{ $exists : true, $not : null } ,'blockdetails.floordetails.floor':apartment.floor});
+
+        
+        //,);
+        if(!query)
+        {
+            console.log("floor=null");
+            console.log(query);
+            await Community.updateOne(
+                { '_id': communityid, 'blockdetails.block':apartment.block},
+                {
+                    '$push': {
+                        'blockdetails.$.floordetails' : {'floor':apartment.floor,'flats': [apartment]}
+
+                    }
+                }
+            ).exec();
+           
+           // floor.floordetails.flats.push(apartment);
+             
+        }
+        else
+        {
+            console.log("floor!=null");
+
+            console.log(query);
+          //  floor.floordetails.push({floor:apartment.floor,flats:[apartment]});
+          await Community.findOneAndUpdate(
+            { '_id': communityid,'blockdetails.block':apartment.block,'blockdetails.floordetails.floor':apartment.floor},
+            {
+                '$push': {
+                    'blockdetails.$[outer].floordetails.$[inner].flats': apartment}
+            },
+                     
+            {'arrayFilters': [{'outer.block': apartment.block}, {'inner.floor': apartment.floor}]}
+            
+           
+            
+        ).exec();
+        
+            
+        }
+        await apartment.save({ session: sess });
+        await sess.commitTransaction();
+     }
+     catch (err) {
+         console.log(err);
+        const error = new HttpError(
+          `Something went wrong, could not create a apartment in- ${communityid}`,
+          500
+        );
+        return next(error);
+      }
+   res.status(201).json({ apartment });
+
+};
 exports.apartment_update = async function(req, res) {
     const communityid=req.params.communityid;  
     res.status(400).send({});
 
 };
+exports.addUserToApartment = async function(req, res,next) {
+    const aptid=req.params.apartmentid;  
+    const userid=req.body.userid;  
 
-exports.apartment_create_post = async function(req, res) {
-    const communityid=req.params.communityid;  
-    const apartment=req.body;
-    apartment.communityid=new ObjectId(communityid);
-    //console.log(model);
-    db.collection('apartments').insertOne(model)   
-    .then(result => {
-     res.status(201).send(model);
-    })
-    .catch(error => console.error(error))
+    let apartment;
+ /************* Fetch apartment by id*************************** */
+    try{
+        apartment=await Apartment.findById(aptid)
+    }
+    catch (err) {
+        const error = new HttpError(
+          `Something went wrong, could not find a Apartment- ${aptid}`,
+          500
+        );
+        return next(error);
+      }
+
+      
+  if (!apartment) {
+    const error = new HttpError(
+      'Could not find a apartment for the provided id.  ${aptid}',
+      404
+    );
+    return next(error);
+  } 
+  
+  
+ 
+ /************* push userid into enrolledby field ************************** */
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+  
+    apartment.enrolledby.push(userid);
+    await apartment.save({ session: sess });
+    
+    await sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError(
+      'Addding user to apartment failed, please try again.',
+      500
+    );
+    return next(error);
+  }
 
   
+  res.json(apartment.toObject({ getters: true }) );
+};
 
+
+exports.removeUserFromApartment = async function(req, res,next) {
+    const aptid=req.params.apartmentid;  
+    const userid=req.body.userid;  
+
+    let apartment;
+ /************* Fetch apartment by id*************************** */
+    try{
+        apartment=await Apartment.findById(aptid)
+    }
+    catch (err) {
+        const error = new HttpError(
+          `Something went wrong, could not find a Apartment- ${aptid}`,
+          500
+        );
+        return next(error);
+      }
+
+      
+  if (!apartment) {
+    const error = new HttpError(
+      'Could not find a apartment for the provided id.  ${aptid}',
+      404
+    );
+    return next(error);
+  } 
+  
+  
+ 
+ /************* pull userid from enrolledby field ************************** */
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+  
+    apartment.enrolledby.pull(userid);
+    await apartment.save({ session: sess });
+    
+    await sess.commitTransaction();
+  } catch (err) {
+    const error = new HttpError(
+      'Removing user from apartment failed, please try again.',
+      500
+    );
+    return next(error);
+  }
+
+  
+  res.json(apartment.toObject({ getters: true }) );
 };

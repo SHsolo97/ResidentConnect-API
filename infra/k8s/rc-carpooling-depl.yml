@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rc-carpooling-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rc-carpooling
+  template:
+    metadata:
+      labels:
+        app: rc-carpooling
+    spec:
+      containers:
+        - name: rc-carpooling
+          image: agni1984/rc-carpooling
+          env:
+            - name: MONGO_URI
+              value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/carpoolinginfo?retryWrites=true&w=majority'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rc-carpooling-srv
+spec:
+  selector:
+    app: rc-carpooling
+  ports:
+    - name: rc-carpooling
+      protocol: TCP
+      port: 4006
+      targetPort: 4006

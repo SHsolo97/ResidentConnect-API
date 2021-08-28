@@ -1,16 +1,30 @@
 var express = require('express');
+const { check } = require('express-validator');
+
+
 var router = express.Router();
 var community_controller = require('../controllers/communityController');
 
 
 
 router.get('/api/communities',community_controller.community_list);
-router.get('/api/community/:id',community_controller.community_detail);
+router.get('/api/community/:id',community_controller.getCommunityById);
 
-router.post('/api/community/create',community_controller.community_create_post);
+router.post('/api/community/create',
+[check('name').not().isEmpty(),
+check('builder').not().isEmpty()],
+community_controller.createCommunity);
 
-router.patch('/api/community/:id/blocks/create',community_controller.community_add_blocks);
-router.patch('/api/community/:id/floors/create',community_controller.community_add_floors);
+
+
+router.patch('/api/community/:id/blocks/create',community_controller.addBlocksInCommunity);
+router.get('/api/community/:id/blocks',community_controller.getBlocksInCommunity);
+
+router.patch('/api/community/:id/floors/create',community_controller.addFloorsInCommunity);
+
+router.patch('/api/community/:id/model/create',community_controller.addApartmentModelInCommunity);
+router.get('/api/community/:id/models',community_controller.getApartmentModelsInCommunity);
+router.post('/api/community/model',community_controller.getApartmentModelsInCommunitybyName);
 
 
 
