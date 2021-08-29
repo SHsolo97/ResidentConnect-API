@@ -5,7 +5,8 @@ var Schema = mongoose.Schema;
 
 var announcementInfoSchema = new Schema({
     communityid : {type: String},
-    announcement:{type:String},
+    description:{type:String},
+    createdby:{type:String},
     createdat:{type:Date},
     expiredat:{type:Date}
    

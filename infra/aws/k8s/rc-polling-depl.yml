@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rc-polling
-          image: agni1984/rc-polling:v1.0.0-snopshot
+          image: agni1984/rc-polling
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/pollinginfo?retryWrites=true&w=majority'

@@ -14,7 +14,8 @@ var visitorsinfoSchema = new Schema({
         phone:{type:String},
         purpose:{type:String}
     },
-    isEntryAllowed:{type:String}
+    status:{type:String},
+    approvedby : {type: Schema.Types.ObjectId, ref: 'User',required: true}
 
     
 });

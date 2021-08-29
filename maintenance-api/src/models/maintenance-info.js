@@ -8,7 +8,7 @@ var maintenanceinfoSchema = new Schema({
     communityid : {type: String},
     apartmentid : {type:String},
     category:{type:String},
-    subcategory:{type:String},
+  
     description:{type:String},
     status:{
         type:String

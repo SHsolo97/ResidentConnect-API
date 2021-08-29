@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: rc-payments
-          image: agni1984/rc-paymentsinfo:v1.0.0-snopshot
+          image: agni1984/rc-paymentsinfo:v0.0.4
           ports: 
             - containerPort: 4012
           env:

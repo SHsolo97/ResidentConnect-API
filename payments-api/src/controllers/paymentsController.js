@@ -7,7 +7,7 @@ const paymentsInfo = require('../models/payments-info');
 
 
 exports.gethealthStatus= async function(req, res,next) {
-    const returnval="payments service running at port 4012 ... v0.0.3";
+    const returnval="payments service running at port 4012 ... v0.0.4";
       res.status(200).send( returnval);
   }
 
@@ -27,7 +27,7 @@ exports.createPayment = async function(req, res,next) {
          "body":body,
          "recipient":recipient
     }
-    axios.post('https://g5hidpzwce.execute-api.ap-south-1.amazonaws.com/dev/sendMail', email)
+    axios.post('https://zl4i20n7s8.execute-api.ap-south-1.amazonaws.com/dev/sendMail', email)
     
 
     .then(res => {}

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rc-classifieds
-          image: agni1984/rc-classifieds:v1.0.0-snopshot
+          image: agni1984/rc-classifieds
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/classifiedsinfo?retryWrites=true&w=majority'

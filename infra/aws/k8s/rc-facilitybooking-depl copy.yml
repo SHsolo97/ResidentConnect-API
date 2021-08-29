@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rc-facilitybooking
-          image: agni1984/rc-facilitybooking:v1.0.0-snopshot
+          image: agni1984/rc-facilitybooking
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/facilitybookinginfo?retryWrites=true&w=majority'

@@ -8,16 +8,13 @@ var advertSchema = new Schema({
     creator:{type: Schema.Types.ObjectId, ref: 'User',required: true},
     title: {type:String, required:true},
     description: {type:String, required:true},
-    advertiser_type: {
+    category: {type:String, required:true},
+    type: {
         type: String,
         enum:  ['private','business'],
         default: 'venue'
     },
-    contact:
-    {
-        name:{type:String, required:true},
-        phone:{type:String, required:true},
-    },
+ 
     images:[{type:String}],
     price:{
         value:{type:Number},
