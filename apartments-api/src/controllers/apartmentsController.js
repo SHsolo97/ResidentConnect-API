@@ -7,6 +7,30 @@ const Apartment = require('../models/apartment');
 
 const Community = require('../models/community');
 
+exports.valitateToken=async function(req, res,next) {
+  const token=req.params.token;
+  let apartment;
+  try{
+    apartment=await Apartment.findOne({'token':token});
+    console.log(apartment);
+    if(apartment==null)
+    {
+      const returnval=`token '${token}' not found`;
+      res.status(404).send( returnval);
+    }
+}
+catch (err) {
+    const error = new HttpError(
+      `Something went wrong, could not find a token- ${token}`,
+      500
+    );
+    return next(error);
+  }
+
+  
+  const returnval=`token '${token}' found`;
+  res.status(200).json(apartment.toObject({ getters: true }) );
+}
 
 exports.apartments_list = async function(req, res,next) {
     const communityid=req.params.communityid;
@@ -144,12 +168,11 @@ exports.apartment_update = async function(req, res) {
     res.status(400).send({});
 
 };
-exports.addUserToApartment = async function(req, res,next) {
+/*exports.addUserToApartment = async function(req, res,next) {
     const aptid=req.params.apartmentid;  
     const userid=req.body.userid;  
 
     let apartment;
- /************* Fetch apartment by id*************************** */
     try{
         apartment=await Apartment.findById(aptid)
     }
@@ -172,7 +195,6 @@ exports.addUserToApartment = async function(req, res,next) {
   
   
  
- /************* push userid into enrolledby field ************************** */
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -199,7 +221,6 @@ exports.removeUserFromApartment = async function(req, res,next) {
     const userid=req.body.userid;  
 
     let apartment;
- /************* Fetch apartment by id*************************** */
     try{
         apartment=await Apartment.findById(aptid)
     }
@@ -222,7 +243,6 @@ exports.removeUserFromApartment = async function(req, res,next) {
   
   
  
- /************* pull userid from enrolledby field ************************** */
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -242,3 +262,4 @@ exports.removeUserFromApartment = async function(req, res,next) {
   
   res.json(apartment.toObject({ getters: true }) );
 };
+*/

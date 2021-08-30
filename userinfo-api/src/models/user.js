@@ -5,8 +5,10 @@ const Schema = mongoose.Schema;
 
 
 const userSchema = new Schema({
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
+    uid:{type:String},
+    profilecompletion:{type:Boolean,required:true,default:false},
+    firstname: { type: String },
+    lastname: { type: String},
     type: {type:String, required:true, enum:  ['admin', 'technician','resident', 'moderator'], default: 'resident'},
     email: { type: String, required: true, unique: true },
     avatar: { type: String },
@@ -27,7 +29,8 @@ const userSchema = new Schema({
             phone:{ type: String }
         }
     ],
-    
+    communities: [{type: Schema.Types.ObjectId, ref: 'communities'}],
+
     apartments: [{type: Schema.Types.ObjectId, ref: 'apartments'}],
  
 })

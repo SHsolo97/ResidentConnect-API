@@ -7,6 +7,10 @@ const mongoose = require('mongoose');
 
 const User = require('../models/user');
 
+exports.gethealthStatus=async function(req, res,next) {
+  const returnval="userInfo service running ...";
+  res.status(200).send( returnval);
+}
 exports.getUsers = async function(req, res,next) {
     let users,count;
     try {
@@ -49,13 +53,15 @@ exports.getUserById = async function(req, res,next) {
 
 }
 
-exports.getUserBycommunityId= async function(req, res,next) {
-    const communityids=req.params.cid;
-    
+exports.searchUsers= async function(req, res,next) {
+    const communityid=req.body.communityid;
+    const uid=req.body.uid;
     let users,count;
+    if(communityid)
+    {
     try {
-        users = await User.find({'apartments.communityid':communityid});
-        count = await User.find({'apartments.communityid':communityid}).countDocuments();
+        users = await User.find({'communities':communityid});
+        count = await User.find({'communities':communityid}).countDocuments();
     } catch (err) {
       const error = new HttpError(
         `Fetching users failed for community ${communityid},  please try again later.`,
@@ -63,7 +69,20 @@ exports.getUserBycommunityId= async function(req, res,next) {
       );
       return next(error);
     }
-  
+    }
+    if(uid)
+    {
+      try{
+       users = await User.find({'uid':uid});
+      count = await User.find({'uid':uid}).countDocuments();
+    } catch (err) {
+    const error = new HttpError(
+      `Fetching users failed for uid ${uid},  please try again later.`,
+      500
+    );
+    return next(error);
+  }
+    }
 
     res.json({count: count, users: users.map(user => user.toObject({ getters: true }))});
 }

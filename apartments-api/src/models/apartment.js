@@ -1,9 +1,16 @@
 var mongoose = require('mongoose');
+var randtoken = require('rand-token');
 
 var Schema = mongoose.Schema;
 var apartmentschema = new Schema({
     communityid : {type: Schema.Types.ObjectId, ref: 'community',required: true},
-    aptnum : {type: String, required: true},
+    token: {
+      type: String,
+      default: function() {
+          return randtoken.generate(5);
+      },required:true,unique:true
+     },
+     aptnum : {type: String, required: true},
     block : {type: String, required: true},
     floor : {type: Number, required: true},
     model:
@@ -26,7 +33,6 @@ var apartmentschema = new Schema({
       
     issold : {type: Boolean, default:false,required: true},
     enrolled:{type: Number,  max: 10, required: true,default:0},
-    enrolledby :[ {type: Schema.Types.ObjectId, ref: 'User',required: true}],
 
     status:{
         type: String,
