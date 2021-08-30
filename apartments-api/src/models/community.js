@@ -1,10 +1,18 @@
 var mongoose = require('mongoose');
+var randtoken = require('rand-token');
 
 var Schema = mongoose.Schema;
 
 var communitySchema = new Schema({
+  token: {
+    type: String,
+    default: function() {
+        return randtoken.generate(5);
+    },required:true,unique:true
+   },
+   profilecompletion:{type:Boolean,required:true,default:false},
     name : {type: String, required: true},
-    builder: {type: String,required: true},
+    builder: {type: String},
     createdAt: { type: Date, default: Date.now() , required: true},
     address : {
       addressline : {type: String},
@@ -15,7 +23,7 @@ var communitySchema = new Schema({
 },
 modeldetails:[
   {
-    name: {type: String,required: true},
+    name: {type: String},
     area:{
       carpetarea:{type: Number},
       builduparea:{type: Number},
@@ -34,8 +42,8 @@ modeldetails:[
 blockdetails:[
   {
       block: {type: String},
-      floors: {type:Number,default: 0, required: true},
-      flats:{type:Number,default: 0, required: true},
+      floors: {type:Number,default: 0},
+      flats:{type:Number,default: 0},
       floordetails:
       [
           {

@@ -5,11 +5,10 @@ const mongoose = require('mongoose');
 
 const visitorsInfo = require('../models/visitors-info');
 
-
-//router.get('/api/community/:id/apartment/:aid/vistors',visitors_Controller.getVisitorsByApartmentId);
-exports.getVisitorsByApartmentId = async function(req, res,next) {
-}
-
+exports.gethealthStatus= async function(req, res,next) {
+    const returnval="visitors management service running...";
+      res.status(200).send( returnval);
+  }
 //router.post('/api/community/:id/apartment/:aid/visitor/create',visitors_Controller.createVisitor);
 exports.createVisitor = async function(req, res,next) {
 }
@@ -27,5 +26,5 @@ exports.deletevisitor = async function(req, res,next) {
 }
 
 //router.post('/api/community/:id/apartment/:aid/vistors',visitors_Controller.searchVisitor);
-exports.searchVisitor = async function(req, res,next) {
+exports.getvisitors = async function(req, res,next) {
 }

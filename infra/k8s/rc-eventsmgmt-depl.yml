@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rc-eventsmgmt
-          image: agni1984/rc-eventsmgmt
+          image: agni1984/rc-eventsmgmt:v1.0.0-snopshot
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/eventmgmtinfo?retryWrites=true&w=majority'

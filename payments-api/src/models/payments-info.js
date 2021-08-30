@@ -7,10 +7,11 @@ var Schema = mongoose.Schema;
 var paymentsinfoSchema = new Schema({
     communityid : {type: String},
     apartmentid : {type:String},
+    period: {type:String},
     category:{type:String},   
-    createdat:{type:Date},
-    dueat:{type:Date},
-    due:{type:Number},
+    createdat:{type:Date,required: true, default: Date.now},
+    dueat:{type:String},
+    amt:{type:Number},
     status:{type:String}
   
     

@@ -7,8 +7,36 @@ const mongoose = require('mongoose');
 const Community = require('../models/community');
 
 
+exports.gethealthStatus= async function(req, res,next) {
+  const returnval="Apartment Service Running...";
+    res.status(200).send( returnval);
+}
 
+exports.valitateToken= async function(req, res,next) {
+  const token=req.params.token;
+  let community;
+  try{
+    community=await Community.findOne({'token':token});
+    console.log(community);
+    if(community==null)
+    {
+      const returnval=`token '${token}' not found`;
+      res.status(404).send( returnval);
+    }
+}
+catch (err) {
+    const error = new HttpError(
+      `Something went wrong, could not find a token- ${token}`,
+      500
+    );
+    return next(error);
+  }
 
+  
+  const returnval=`token '${token}' found`;
+  res.status(200).json(community.toObject({ getters: true }) );
+
+}
 exports.community_list = async function(req, res,next) {
 
     let communities,count;
@@ -58,6 +86,7 @@ exports.getCommunityById = async function(req, res,next) {
 exports.createCommunity =async function(req, res,next) 
 {
  
+  console.log(req.body);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return next(

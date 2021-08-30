@@ -4,10 +4,13 @@ const HttpError = require('../models/http-error');
 const mongoose = require('mongoose');
 
 const maintenanceInfo = require('../models/maintenance-info');
-
-
+exports.gethealthStatus= async function(req, res,next) {
+    const returnval="Maintenance service running...";
+      res.status(200).send( returnval);
+  }
+  
 //router.get('/api/community/:id/apartment/:aid/maintenancerequests',maintenance_Controller.getMaintenanceReqByApartmentId);
-exports.getMaintenanceReqByApartmentId = async function(req, res,next) {
+exports.getMaintenanceReqs = async function(req, res,next) {
 }
 
 //router.post('/api/community/:id/apartment/:aid/maintenanceeRequest/create',maintenance_Controller.createMaintenanceReq);

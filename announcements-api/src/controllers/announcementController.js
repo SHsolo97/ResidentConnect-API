@@ -9,19 +9,18 @@ const mongoose = require('mongoose');
 
 const announcementInfo = require('../models/announcement-info');
 
-
-//router.get('/api/community/:cid/announcements',announcement_Controller.getAnnouncements);
+exports.gethealthStatus= async function(req, res,next) {
+    const returnval="Announcement service running...";
+      res.status(200).send( returnval);
+  }
 exports.getAnnouncements= async function(req, res,next) {
 }
 
-//router.get('/api/community/:cid/announcements/active',announcement_Controller.getActiveAnnouncements);
-exports.getActiveAnnouncements= async function(req, res,next) {
-}
 
-//router.get('/api/announcement/:aid',advert_Controller.getAnnouncementbyId);
+//router.get('/api/community/:cid/announcements/:aid',advert_Controller.getAnnouncementbyId);
 exports.getAnnouncementbyId= async function(req, res,next) {
 }
 
-//router.post('/api/announcement/create',advert_Controller.createAnnouncement);
+//router.post('/api/community/:cid/announcements/create',advert_Controller.createAnnouncement);
 exports.createAnnouncement= async function(req, res,next) {
 }

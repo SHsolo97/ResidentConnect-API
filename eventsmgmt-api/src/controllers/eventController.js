@@ -7,8 +7,12 @@ const HttpError = require('../models/http-error');
 const mongoose = require('mongoose');
 
 const Event = require('../models/event');
+exports.gethealthStatus= async function(req, res,next) {
+  const returnval="Events Management service running...";
+    res.status(200).send( returnval);
+}
 
-exports.getEventsList= async function(req, res,next) {
+/*exports.getEventsList= async function(req, res,next) {
     let events,count;
     try {
         events = await Event.find();
@@ -24,6 +28,8 @@ exports.getEventsList= async function(req, res,next) {
 
     res.json({count: count, events: events.map(event => event.toObject({ getters: true }))});
 }
+*/
+
 
 //get
 exports.getEventById = async function(req, res,next) {
@@ -54,17 +60,32 @@ exports.getEventById = async function(req, res,next) {
 //post
 exports.getEvents = async function(req, res,next) {
     const searchcritera=req.body;
+    const error = new HttpError(
+      `Service Not Implemented`,
+      501
+    );
+    return next(error);
 }
 
 
 //put
 exports.editEvent = async function(req, res,next) {
     const eventid=req.params.eid;
+    const error = new HttpError(
+      `Service Not Implemented`,
+      501
+    );
+    return next(error);
 }
 
 //delete
 exports.deleteEvent = async function(req, res,next) {
     const eventid=req.params.eid;
+    const error = new HttpError(
+      `Service Not Implemented`,
+      501
+    );
+    return next(error);
 
 }
 
@@ -132,21 +153,6 @@ exports.enrollToEvent = async function(req, res,next) {
 
  
   
-  const body={eventid:event._id};
-  
-  axios.patch(`http://rc-eventsmgmt-srv:4002/api/user/${userid}/event/add`, body)
- .then(res => {}
- )
- .catch(err=>{
-     //console.log(err);
-     const error = new HttpError(
-         'Something went wrong. event is not added in user object',
-         500
-       );
-       return next(error);
- })
-
-  
   res.json(event.toObject({ getters: true }) );
 }
 
@@ -198,21 +204,6 @@ exports.unEnrollToEvent = async function(req, res,next) {
   }
 
  
-  
-  const body={eventid:event._id};
-  
-  axios.patch(`http://rc-eventsmgmt-srv:4002/api/user/${userid}/event/remove`, body)
- .then(res => {}
- )
- .catch(err=>{
-     console.log(err);
-     const error = new HttpError(
-         'Something went wrong. event is not removed from user object',
-         500
-       );
-       return next(error);
- })
-
   
   res.json(event.toObject({ getters: true }) );
 }

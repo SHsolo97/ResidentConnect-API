@@ -30,7 +30,8 @@ app.use((req, res, next) => {
 
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  //.connect(process.env.MONGO_URI)
+  .connect('mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/eventmgmtinfo?retryWrites=true&w=majority')
   .then(() => {
     app.listen(4003,()=>{
         console.log('****************************************Events management Info Service: Listening on 4003');

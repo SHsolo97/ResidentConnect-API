@@ -6,11 +6,15 @@ var router = express.Router();
 var facility_controller = require('../controllers/facility-info');
 
 
+router.get('/api/facilities/health-status',facility_controller.gethealthStatus);
 
-router.get('/api/community/:id/facility',facility_controller.getFacilitybyCommunityId);
-router.post('/api/community/:id/facility/create',facility_controller.createFacility);
-router.put('/api/community/:id/facility/:fid',facility_controller.editFacility);
-router.patch('/api/community/:id/facility/:fid',facility_controller.bookFacility);
-router.patch('/api/community/:id/facility/:fid',facility_controller.cancelFacilityBooking);
-router.delete('/api/community/:id/facility/:fid',facility_controller.deleteFacility);
+
+router.post('/api/facilities',facility_controller.getFacilities);
+router.get('/api/facilities/:fid',facility_controller.getFacility);
+
+router.post('/api/facilities/create',facility_controller.createFacility);
+router.put('/api/facilities/:fid',facility_controller.editFacility);
+router.patch('/api/facilities/:fid',facility_controller.bookFacility);
+router.patch('/api/facilities/:fid',facility_controller.cancelFacilityBooking);
+router.delete('/api/facilities/:fid',facility_controller.deleteFacility);
 module.exports = router;

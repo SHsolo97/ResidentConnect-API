@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rc-visitormgmt
-          image: agni1984/rc-visitormgmt
+          image: agni1984/rc-visitormgmt:v1.0.0-snopshot
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/visitorsinfo?retryWrites=true&w=majority'

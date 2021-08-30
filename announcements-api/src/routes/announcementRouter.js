@@ -4,10 +4,9 @@ const { check } = require('express-validator');
 
 var router = express.Router();
 var announcement_Controller = require('../controllers/announcementController');
+router.get('/api/announcements/health-status',announcement_Controller.gethealthStatus);
+router.post('/api/announcements',announcement_Controller.getAnnouncements);
 
-router.get('/api/community/:cid/announcements',announcement_Controller.getAnnouncements);
-router.get('/api/community/:cid/announcements/active',announcement_Controller.getActiveAnnouncements);
-
-router.get('/api/announcement/:aid',announcement_Controller.getAnnouncementbyId);
-router.post('/api/announcement/create',announcement_Controller.createAnnouncement);
+router.get('/api/announcements/:aid',announcement_Controller.getAnnouncementbyId);
+router.post('/api/announcements/create',announcement_Controller.createAnnouncement);
 module.exports = router;

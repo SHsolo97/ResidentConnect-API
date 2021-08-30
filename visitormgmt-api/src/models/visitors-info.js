@@ -13,7 +13,10 @@ var visitorsinfoSchema = new Schema({
         name:{type:String},
         phone:{type:String},
         purpose:{type:String}
-    }
+    },
+    status:{type:String},
+    approvedby : {type: Schema.Types.ObjectId, ref: 'User',required: true}
+
     
 });
 

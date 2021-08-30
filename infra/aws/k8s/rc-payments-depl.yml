@@ -1,0 +1,41 @@
+
+#kubectl apply -f rc-payments-depl.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rc-payments-depl
+  labels:
+    app: rc-payments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rc-payments
+  template:
+    metadata:
+      labels:
+        app: rc-payments
+    spec:
+      containers:
+        - name: rc-payments
+          image: agni1984/rc-paymentsinfo:v0.0.4
+          ports: 
+            - containerPort: 4012
+          env:
+            - name: MONGO_URI
+              value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/paymentsinfo?retryWrites=true&w=majority'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rc-payments-srv
+  annotations:
+    alb.ingress.kubernetes.io/healthcheck-path: /payments/health-status
+spec:
+  type: NodePort
+  selector:
+    app: rc-payments
+  ports:
+    - name: rc-payments
+      port: 4012
+      targetPort: 4012

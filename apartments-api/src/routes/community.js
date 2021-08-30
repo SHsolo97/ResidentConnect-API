@@ -6,8 +6,10 @@ var router = express.Router();
 var community_controller = require('../controllers/communityController');
 
 
+router.get('/api/community/health-status',community_controller.gethealthStatus);
+router.get('/api/community/validatetoken/:token',community_controller.valitateToken);
 
-router.get('/api/communities',community_controller.community_list);
+router.get('/api/community',community_controller.community_list);
 router.get('/api/community/:id',community_controller.getCommunityById);
 
 router.post('/api/community/create',

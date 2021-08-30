@@ -30,7 +30,8 @@ app.use((req, res, next) => {
 
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  //.connect(process.env.MONGO_URI)
+  .connect( 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/facilitybookinginfo?retryWrites=true&w=majority')
   .then(() => {
     app.listen(4008,()=>{
         console.log('****************************************Facility Info Service: Listening on 4008');

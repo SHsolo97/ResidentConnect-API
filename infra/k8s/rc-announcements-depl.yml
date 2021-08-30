@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rc-announcements
-          image: agni1984/rc-announcements
+          image: agni1984/rc-announcements:v1.0.0-snopshot
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/announcementsinfo?retryWrites=true&w=majority'

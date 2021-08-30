@@ -8,18 +8,18 @@ const Carpoooling = require('../models/carpooling-info');
 
 
 
-
-//router.get('/api/community/:cid/carpoolings',carpooling_Controller.getcarpoolingList); 
-exports.getcarpoolingList= async function(req, res,next) {
+exports.gethealthStatus= async function(req, res,next) {
+    const returnval="carpooling service running...";
+      res.status(200).send( returnval);
+  }
+exports.getcarpoolings= async function(req, res,next) {
 }
 
 //router.get('/api/community/:cid/carpolling/:cid',carpooling_Controller.getcarpoolingById); 
 exports.getcarpoolingById= async function(req, res,next) {
 }
 
-//router.post('/api/community/:cid/carpollings',carpooling_Controller.getcarpoolingsByTags); 
-exports.getcarpoolingsByTags= async function(req, res,next) {
-}
+
 
 //router.post('/api/carpooling/create',carpooling_Controller.createCarpooling); 
 exports.createCarpooling= async function(req, res,next) {
