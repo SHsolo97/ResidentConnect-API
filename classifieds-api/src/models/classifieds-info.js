@@ -4,10 +4,13 @@ const uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
 var classifiedsInfoSchema = new Schema({
-    communityid :{type: String, required: true},
-    tags:[{type: String}],
+    communityid :{type: Schema.Types.ObjectId, ref: 'communities'},
+    category:[{type: String}],
+    subcategory:[{type: String}],
     name:{type: String, required: true},
     description:{type:String,required:true},
+    website:{type:String},
+
     ratings:{
         _5star:{type:Number,default:0,required:true},
         _4star:{type:Number,default:0,required:true},

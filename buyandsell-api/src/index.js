@@ -10,6 +10,7 @@ const advertRouter = require('./routes/advert');
 
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use(advertRouter);

@@ -9,10 +9,11 @@ var advertSchema = new Schema({
     title: {type:String, required:true},
     description: {type:String, required:true},
     category: {type:String, required:true},
+    subcategory: {type:String, required:true},
     type: {
         type: String,
         enum:  ['private','business'],
-        default: 'venue'
+        default: 'private'
     },
  
     images:[{type:String}],

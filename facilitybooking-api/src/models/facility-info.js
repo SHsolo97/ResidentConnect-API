@@ -5,10 +5,14 @@ var facilitySchema = new Schema({
     communityid : {type:String,required:true},
     type : {type: String, required: true},
     name : {type: String, required: true},
+    details : {type: String, required: true},
+    bookingtype:{type:String,  enum:  ['free', 'day', 'slot'],
+    default: 'free'},
+    rent:{type: Number, required: true,default:0},
     timings :[
         {
             day:{type:String},
-            isopen:{type:Boolean},
+            isclosed:{type:Boolean,default:false},
             opentime:{type:String},
             closetime:{type:String},
             slots:[
