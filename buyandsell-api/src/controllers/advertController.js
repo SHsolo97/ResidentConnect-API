@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 
 const Advert = require('../models/advert');
 
-
+const Category=require('../models/category-info')
+const SubCategory=require('../models/subcategory-info');
 
 exports.gethealthStatus= async function(req, res,next) {
   const returnval="Advert service running...";
@@ -92,4 +93,76 @@ exports.createAd= async function(req, res,next) {
    const advert=new Advert(req.body);
    advert.save();
    res.status(201).json(advert);
+}
+
+//router.get('/api/adverts/categories',classifieds_controller.getCategories);
+
+exports.getCategories = async function(req, res,next) {
+  
+  let categories,count;
+  try {
+    categories = await Category.find();
+      count = await Category.find().countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      'Fetching categoies failed, please try again later.',
+      500
+    );
+    return next(error);
+  }
+
+
+  res.json({count: count, categories: categories.map(category => category.toObject({ getters: true }))});
+
+}
+//router.post('/api/adverts/categories',classifieds_controller.getSubCategories);
+exports.getSubCategories = async function(req, res,next) {
+  let subcategories,count;
+  let category=req.body.category;
+  try {
+    subcategories = await SubCategory.find({'category':category});
+      count = await SubCategory.find({'category':category}).countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      'Fetching categoies failed, please try again later.',
+      500
+    );
+    return next(error);
+  }
+
+
+  res.json({count: count, subcategories: subcategories.map(subcategory => subcategory.toObject({ getters: true }))});
+
+}
+//router.post('/api/adverts/categories/create',classifieds_controller.createCategory);
+exports.createCategory = async function(req, res,next) {
+  
+  console.log(req.body);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return next(
+          new HttpError('Invalid inputs passed, please check your data.', 422)
+        );
+      }
+
+   const categoryObj=new Category(req.body);
+   categoryObj.save();
+   res.status(201).json({ categoryObj });
+
+}
+//router.post('/api/adverts/subcategories/create',classifieds_controller.createSubCategory);
+exports.createSubCategory = async function(req, res,next) {
+
+  console.log(req.body);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return next(
+          new HttpError('Invalid inputs passed, please check your data.', 422)
+        );
+      }
+
+   const subcategoryObj=new SubCategory(req.body);
+   subcategoryObj.save();
+   res.status(201).json({ subcategoryObj });
+
 }
