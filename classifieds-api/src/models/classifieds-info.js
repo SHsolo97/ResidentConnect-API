@@ -10,7 +10,7 @@ var classifiedsInfoSchema = new Schema({
     name:{type: String, required: true},
     description:{type:String,required:true},
     website:{type:String},
-
+    thumbnail:{type:String},
     ratings:{
         _5star:{type:Number,default:0,required:true},
         _4star:{type:Number,default:0,required:true},

@@ -13,7 +13,7 @@ var communitySchema = new Schema({
    profilecompletion:{type:Boolean,required:true,default:false},
     name : {type: String, required: true},
     builder: {type: String},
-    createdAt: { type: Date, default: Date.now() , required: true},
+    createdat: { type: Date, default: Date.now() , required: true},
     address : {
       addressline : {type: String},
       area : {type: String},
