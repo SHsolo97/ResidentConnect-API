@@ -6,6 +6,7 @@ const cors=require('cors')
 const communityRouter = require('./routes/community');
 //const apartmentmodelsRouter = require('./src/routes/apartmentmodels');
 const apartmentsRouter=require('./routes/apartments');
+const apartmentmodeRouter=require('./routes/apartment-model');
 const HttpError = require('./models/http-error');
 
 
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 //app.use(apartmentmodelsRouter);
 app.use(apartmentsRouter);
 app.use(communityRouter);
+app.use(apartmentmodeRouter);
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this route.', 404);
     throw error;

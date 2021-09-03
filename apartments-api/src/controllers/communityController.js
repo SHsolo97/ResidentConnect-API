@@ -55,6 +55,36 @@ exports.community_list = async function(req, res,next) {
     res.json({count: count, communities: communities.map(community => community.toObject({ getters: true }))});
 };
 
+exports.editCommunityDetails= async function(req, res,next) {
+  const communityid=req.params.id;
+  
+    const filter={_id:communityid};
+    const update=req.body;
+    let community;
+    try{
+      community=await Community.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      
+    }
+  catch (err) {
+      const error = new HttpError(
+        `Something went wrong, could not edit a community- ${communityid}`,
+        500
+      );
+      return next(error);
+    }
+
+    
+if (!community) {
+  const error = new HttpError(
+    'Could not find a community for the provided id.',
+    404
+  );
+  return next(error);
+}  
+res.json(community.toObject({ getters: true }) );
+}
 exports.getCommunityById = async function(req, res,next) {
     const communityid=req.params.id;
     let community;

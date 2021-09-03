@@ -21,24 +21,7 @@ var communitySchema = new Schema({
       state : {type: String},
       pincode : {type: String}
 },
-modeldetails:[
-  {
-    name: {type: String},
-    area:{
-      carpetarea:{type: Number},
-      builduparea:{type: Number},
-      superbuilduparea:{type: Number}
-    },
-    rooms : {
-      bedrooms : {type: Number},
-      bathrooms :{type: Number},
-      balconies: {type: Number},
-      kitchens : {type: Number},
-      halls :{type: Number},
-      otherrooms:{type: Number}
-  }
-  }
-],
+
 blockdetails:[
   {
       block: {type: String},
