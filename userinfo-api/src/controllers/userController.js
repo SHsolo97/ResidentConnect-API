@@ -54,35 +54,21 @@ exports.getUserById = async function(req, res,next) {
 }
 
 exports.searchUsers= async function(req, res,next) {
-    const communityid=req.body.communityid;
-    const uid=req.body.uid;
+  
     let users,count;
-    if(communityid)
-    {
+   
     try {
-        users = await User.find({'communities':communityid});
-        count = await User.find({'communities':communityid}).countDocuments();
+        users = await User.find(req.body);
+        count = await User.find(req.body).countDocuments();
     } catch (err) {
       const error = new HttpError(
-        `Fetching users failed for community ${communityid},  please try again later.`,
+        `Fetching users failed,  please try again later.`,
         500
       );
       return next(error);
     }
-    }
-    if(uid)
-    {
-      try{
-       users = await User.find({'uid':uid});
-      count = await User.find({'uid':uid}).countDocuments();
-    } catch (err) {
-    const error = new HttpError(
-      `Fetching users failed for uid ${uid},  please try again later.`,
-      500
-    );
-    return next(error);
-  }
-    }
+   
+ 
 
     res.json({count: count, users: users.map(user => user.toObject({ getters: true }))});
 }
@@ -231,8 +217,39 @@ exports.removeApartmentFromUser= async function(req, res,next) {
 }
 
 exports.editUser = async function(req, res,next) {
-    const error = new HttpError('not implemented', 501);
-    return next(error);
+  
+  const userid=req.params.uid;
+
+
+    const filter={_id:userid};
+    const update=req.body;
+    let user;
+    try{
+      user=await User.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      
+    }
+  catch (err) {
+    console.log(err);
+      const error = new HttpError(
+        `Something went wrong, could not edit a user- ${userid}`,
+        500
+      );
+      return next(error);
+    }
+
+    
+if (!user) {
+  const error = new HttpError(
+    'Could not find a community for the provided id.',
+    404
+  );
+  return next(error);
+}  
+
+res.status(200).json(user.toObject({ getters: true }) );
+
 }
 exports.deleteUser = async function(req, res,next) {
     const userid = req.params.uid;
