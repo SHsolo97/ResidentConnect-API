@@ -25,7 +25,7 @@ exports.getUsers = async function(req, res,next) {
     }
   
 
-    res.json({count: count, users: users.map(user => user.toObject({ getters: true }))});
+    res.json({count: count, users: users.map(user => user.toObject())});
 }
 exports.getUserById = async function(req, res,next) {
     const userid=req.params.uid;
@@ -49,7 +49,7 @@ exports.getUserById = async function(req, res,next) {
     );
     return next(error);
   }  
-  res.json(user.toObject({ getters: true }) );
+  res.json(user.toObject() );
 
 }
 
@@ -70,7 +70,7 @@ exports.searchUsers= async function(req, res,next) {
    
  
 
-    res.json({count: count, users: users.map(user => user.toObject({ getters: true }))});
+    res.json({count: count, users: users.map(user => user.toObject())});
 }
 exports.createUser = async function(req, res,next) {
     const errors = validationResult(req);
@@ -146,7 +146,7 @@ exports.addApartmentToUser= async function(req, res,next) {
  })
 
   
-  res.json(user.toObject({ getters: true }) );
+  res.json(user.toObject() );
 
 }
 
@@ -212,7 +212,7 @@ exports.removeApartmentFromUser= async function(req, res,next) {
  })
 
   
-  res.json(user.toObject({ getters: true }) );
+  res.json(user.toObject() );
 
 }
 
@@ -248,7 +248,7 @@ if (!user) {
   return next(error);
 }  
 
-res.status(200).json(user.toObject({ getters: true }) );
+res.status(200).json(user.toObject() );
 
 }
 exports.deleteUser = async function(req, res,next) {
@@ -330,7 +330,7 @@ exports.addEventToUser= async function(req, res,next) {
     return next(error);
   }
 
-  res.json(user.toObject({ getters: true }) );
+  res.json(user.toObject() );
 }
 
 exports.removeEventFromUser= async function(req, res,next) {
@@ -379,5 +379,5 @@ exports.removeEventFromUser= async function(req, res,next) {
     return next(error);
   }
 
-  res.json(user.toObject({ getters: true }) );
+  res.json(user.toObject() );
 }
