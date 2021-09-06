@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const m2s = require('mongoose-to-swagger');
 
 const HttpError = require('../models/http-error');
 const mongoose = require('mongoose');
@@ -6,6 +7,12 @@ const mongoose = require('mongoose');
 const Apartment = require('../models/apartment');
 
 const Community = require('../models/community');
+
+exports.getSwaggerSchema= async function(req, res,next) {
+  const swaggerSchema = m2s(Apartment);
+  console.log(swaggerSchema);
+    res.status(200).send( swaggerSchema);
+}
 
 exports.valitateToken=async function(req, res,next) {
   const token=req.params.token;
@@ -164,10 +171,38 @@ exports.apartment_create_post = async function(req, res,next) {
 
 };
 exports.apartment_update = async function(req, res) {
-    const communityid=req.params.communityid;  
+    const apartmentid=req.params.apartmentid;
+  
+    const filter={_id:apartmentid};
+    const update=req.body;
+    let apartment;
+    try{
+      apartment=await Apartment.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      
+    }
+  catch (err) {
+      const error = new HttpError(
+        `Something went wrong, could not edit a apartment- ${apartmentid}`,
+        500
+      );
+      return next(error);
+    }
+
+    
+if (!apartment) {
+  const error = new HttpError(
+    'Could not find a apartment for the provided id.',
+    404
+  );
+  return next(error);
     res.status(400).send({});
 
-};
+  }
+  
+res.json(apartment.toObject({ getters: true }) );
+}
 /*exports.addUserToApartment = async function(req, res,next) {
     const aptid=req.params.apartmentid;  
     const userid=req.body.userid;  

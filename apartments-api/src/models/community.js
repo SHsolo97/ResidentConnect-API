@@ -15,11 +15,11 @@ var communitySchema = new Schema({
     builder: {type: String},
     createdat: { type: Date, default: Date.now() , required: true},
     address : {
-      addressline : {type: String},
-      area : {type: String},
-      city: {type: String},
-      state : {type: String},
-      pincode : {type: String}
+      addressline : {type: String,default:''},
+      area : {type: String,default:''},
+      city: {type: String,default:''},
+      state : {type: String,default:''},
+      pincode : {type: String,default:''}
 },
 
 blockdetails:[

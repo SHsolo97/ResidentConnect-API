@@ -58,7 +58,30 @@ exports.getAdById= async function(req, res,next) {
   }  
   res.json(advert.toObject({ getters: true }) );
 }
+exports.deleteAdById= async function(req, res,next) {
+  const advertid=req.params.aid;  
+  let advert;
 
+  try {
+    advert=await Advert.findById(advertid).populate();
+    advert.remove();
+     } catch (err) {
+         console.log(err);
+         const error = new HttpError(
+           'Something went wrong, could not delete model.',
+           500
+         );
+         return next(error);
+       }
+       if (!advert) {
+         const error = new HttpError('Could not find advert for this id.', 404);
+         return next(error);
+       } 
+    
+    
+     res.status(200).json({ message: 'Deleted advert.' });
+
+}
 /*exports.getAdsByCommunityId= async function(req, res,next) {
     const communityid=req.params.cid;
 
@@ -80,6 +103,22 @@ exports.getAdById= async function(req, res,next) {
 }*/
 
 exports.getAds= async function(req, res,next) {
+  let ads,count;
+   
+  try {
+      ads = await Advert.find(req.body);
+      count = await Advert.find(req.body).countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      `Fetching users failed,  please try again later.`,
+      500
+    );
+    return next(error);
+  }
+ 
+
+
+  res.json({count: count, ads: ads.map(ad => ad.toObject())});
 }
 
 exports.createAd= async function(req, res,next) {

@@ -8,7 +8,6 @@ var advertSchema = new Schema({
     creator:{type: Schema.Types.ObjectId, ref: 'User',required: true},
     createdat: { type: Date, default: Date.now() , required: true},
     activatedat: { type: Date, default: Date.now() , required: true},
-
     title: {type:String, required:true},
     description: {type:String, required:true},
     category: {type:String, required:true},
