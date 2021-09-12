@@ -141,6 +141,7 @@ exports.getCategories = async function(req, res,next) {
   let categories,count;
   try {
     categories = await Category.find();
+    console.log(categories);
       count = await Category.find().countDocuments();
   } catch (err) {
     const error = new HttpError(

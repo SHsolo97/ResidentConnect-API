@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-users-depl
+  name: rc-usersinfo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-users
+      app: rc-usersinfo
   template:
     metadata:
       labels:
-        app: rc-users
+        app: rc-usersinfo
     spec:
       containers:
-        - name: rc-users
-          image: agni1984/rc-users:v1.0.0-snopshot
+        - name: rc-usersinfo
+          image: agni1984/rc-usersinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/usersinfo?retryWrites=true&w=majority'
@@ -22,13 +22,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-users-srv
+  name: rc-usersinfo-srv
   
 spec:
+  type: ClusterIP
   selector:
-    app: rc-users
+    app: rc-usersinfo
   ports:
-    - name: rc-users
-      protocol: TCP
+    - name: rc-usersinfo
       port: 4002
       targetPort: 4002

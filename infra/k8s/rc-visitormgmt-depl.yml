@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-visitormgmt-depl
+  name: rc-visitormgmtinfo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-visitormgmt
+      app: rc-visitormgmtinfo
   template:
     metadata:
       labels:
-        app: rc-visitormgmt
+        app: rc-visitormgmtinfo
     spec:
       containers:
-        - name: rc-visitormgmt
-          image: agni1984/rc-visitormgmt:v1.0.0-snopshot
+        - name: rc-visitormgmtinfo
+          image: agni1984/rc-visitormgmtinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/visitorsinfo?retryWrites=true&w=majority'
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-visitormgmt-srv
+  name: rc-visitormgmtinfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-visitormgmt
+    app: rc-visitormgmtinfo
   ports:
-    - name: rc-visitormgmt
-      protocol: TCP
+    - name: rc-visitormgmtinfo
       port: 4011
       targetPort: 4011

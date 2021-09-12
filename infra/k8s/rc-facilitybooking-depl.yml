@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-facilitybooking-depl
+  name: rc-facilitybookinginfo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-facilitybooking
+      app: rc-facilitybookinginfo
   template:
     metadata:
       labels:
-        app: rc-facilitybooking
+        app: rc-facilitybookinginfo
     spec:
       containers:
-        - name: rc-facilitybooking
-          image: agni1984/rc-facilitybooking:v1.0.0-snopshot
+        - name: rc-facilitybookinginfo
+          image: agni1984/rc-facilitybookinginfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/facilitybookinginfo?retryWrites=true&w=majority'
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-facilitybooking-srv
+  name: rc-facilitybookinginfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-facilitybooking
+    app: rc-facilitybookinginfo
   ports:
-    - name: rc-facilitybooking
-      protocol: TCP
+    - name: rc-facilitybookinginfo
       port: 4008
       targetPort: 4008

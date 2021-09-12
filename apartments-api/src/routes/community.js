@@ -21,6 +21,8 @@ community_controller.createCommunity);
 
 
 router.patch('/api/community/:id/blocks/create',community_controller.addBlocksInCommunity);
+router.put('/api/community/:id/blocks/edit',community_controller.editBlocksInCommunity);
+
 router.get('/api/community/:id/blocks',community_controller.getBlocksInCommunity);
 
 router.patch('/api/community/:id/floors/create',community_controller.addFloorsInCommunity);

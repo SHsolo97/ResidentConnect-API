@@ -3,24 +3,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-payments-depl
+  name: rc-paymentsinfo-depl
   labels:
-    app: rc-payments
+    app: rc-paymentsinfo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-payments
+      app: rc-paymentsinfo
   template:
     metadata:
       labels:
-        app: rc-payments
+        app: rc-paymentsinfo
     spec:
       containers:
-        - name: rc-payments
-          image: agni1984/rc-paymentsinfo:v1.0.0-snopshot
-          ports: 
-            - containerPort: 4012
+        - name: rc-paymentsinfo
+          image: agni1984/rc-paymentsinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/paymentsinfo?retryWrites=true&w=majority'
@@ -28,14 +26,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-payments-srv
-  annotations:
-    alb.ingress.kubernetes.io/healthcheck-path: /payments/health-status
+  name: rc-paymentsinfo-srv
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
-    app: rc-payments
+    app: rc-paymentsinfo
   ports:
-    - name: rc-payments
+    - name: rc-paymentsinfo
       port: 4012
       targetPort: 4012

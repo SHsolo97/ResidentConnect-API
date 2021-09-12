@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-announcements-depl
+  name: rc-announcementsinfo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-announcements
+      app: rc-announcementsinfo
   template:
     metadata:
       labels:
-        app: rc-announcements
+        app: rc-announcementsinfo
     spec:
       containers:
-        - name: rc-announcements
-          image: agni1984/rc-announcements:v1.0.0-snopshot
+        - name: rc-announcementsinfo
+          image: agni1984/rc-announcementsinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/announcementsinfo?retryWrites=true&w=majority'
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-announcements-srv
+  name: rc-announcementsinfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-announcements
+    app: rc-announcementsinfo
   ports:
-    - name: rc-announcements
-      protocol: TCP
+    - name: rc-announcementsinfo
       port: 4010
       targetPort: 4010

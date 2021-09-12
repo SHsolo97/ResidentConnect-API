@@ -6,15 +6,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-apartments
+      app: rc-apartmentsinfo
   template:
     metadata:
       labels:
-        app: rc-apartments
+        app: rc-apartmentsinfo
     spec:
       containers:
-        - name: rc-apartments
-          image: agni1984/rc-apartments:v1.0.0-snopshot
+        - name: rc-apartmentsinfo
+          image: agni1984/rc-apartmentsinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority'
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-apartments-srv
+  name: rc-apartmentsinfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-apartments
+    app: rc-apartmentsinfo
   ports:
-    - name: rc-apartments
-      protocol: TCP
+    - name: rc-apartmentsinfo
       port: 4000
       targetPort: 4000

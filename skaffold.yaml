@@ -8,7 +8,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: agni1984/rc-apartments
+    - image: agni1984/rc-apartmentsinfo
       context: apartments-api
       docker:
         dockerfile: Dockerfile
@@ -16,7 +16,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-buyandsell
+    - image: agni1984/rc-buyandsellinfo
       context: buyandsell-api
       docker:
         dockerfile: Dockerfile
@@ -24,7 +24,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-carpooling
+    - image: agni1984/rc-carpoolinginfo
       context: carpooling-api
       docker:
         dockerfile: Dockerfile
@@ -32,7 +32,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-classifieds
+    - image: agni1984/rc-classifiedsinfo
       context: classifieds-api
       docker:
         dockerfile: Dockerfile
@@ -48,7 +48,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-eventsmgmt
+    - image: agni1984/rc-eventsmgmtinfo
       context: eventsmgmt-api
       docker:
         dockerfile: Dockerfile
@@ -56,7 +56,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-polling
+    - image: agni1984/rc-pollinginfo
       context: polling-api
       docker:
         dockerfile: Dockerfile
@@ -64,7 +64,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-facilitybooking
+    - image: agni1984/rc-facilitybookinginfo
       context: facilitybooking-api
       docker:
         dockerfile: Dockerfile
@@ -72,7 +72,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-maintenance
+    - image: agni1984/rc-maintenanceinfo
       context: maintenance-api
       docker:
         dockerfile: Dockerfile
@@ -80,7 +80,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-users
+    - image: agni1984/rc-usersinfo
       context: userinfo-api
       docker:
         dockerfile: Dockerfile
@@ -88,7 +88,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-announcements
+    - image: agni1984/rc-announcementsinfo
       context: announcements-api
       docker:
         dockerfile: Dockerfile
@@ -96,7 +96,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-visitormgmt
+    - image: agni1984/rc-visitormgmtinfo
       context: visitormgmt-api
       docker:
         dockerfile: Dockerfile
@@ -104,7 +104,7 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-payments
+    - image: agni1984/rc-paymentsinfo
       context: payments-api
       docker:
         dockerfile: Dockerfile

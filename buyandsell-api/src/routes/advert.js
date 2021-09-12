@@ -4,6 +4,8 @@ const { check } = require('express-validator');
 
 var router = express.Router();
 var advert_Controller = require('../controllers/advertController');
+
+
 router.get('/api/adverts/health-status',advert_Controller.gethealthStatus);
 router.get('/api/adverts/categories',advert_Controller.getCategories);
 router.post('/api/adverts/subcategories',advert_Controller.getSubCategories);

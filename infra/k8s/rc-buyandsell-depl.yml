@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-buyandsell-depl
+  name: rc-buyandsellinfo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-buyandsell
+      app: rc-buyandsellinfo
   template:
     metadata:
       labels:
-        app: rc-buyandsell
+        app: rc-buyandsellinfo
     spec:
       containers:
-        - name: rc-buyandsell
-          image: agni1984/rc-buyandsell:v1.0.0-snopshot
+        - name: rc-buyandsellinfo
+          image: agni1984/rc-buyandsellinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/buyandsellinfo?retryWrites=true&w=majority'
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-buyandsell-srv
+  name: rc-buyandsellinfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-buyandsell
+    app: rc-buyandsellinfo
   ports:
-    - name: rc-buyandsell
-      protocol: TCP
+    - name: rc-buyandsellinfo
       port: 4004
       targetPort: 4004

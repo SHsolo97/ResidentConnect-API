@@ -29,14 +29,60 @@ spec:
   rules:
     - http:
         paths:         
+          - path: /api/community/*
+            backend:
+              serviceName: rc-apartmentsinfo-srv
+              servicePort: 4000
           - path: /api/contacts/*
             backend:
               serviceName: rc-contactsinfo-srv
               servicePort: 4001
+          - path: /api/users/*
+            backend:
+              serviceName: rc-usersinfo-srv
+              servicePort: 4002
+          - path: /api/events/*
+            backend:
+              serviceName: rc-eventsmgmtinfo-srv
+              servicePort: 4003 
+          - path: /api/adverts/*
+            backend:
+              serviceName: rc-buyandsellinfo-srv
+              servicePort: 4004 
+          - path: /api/classifieds/*
+            backend:
+              serviceName: rc-classifiedsinfo-srv
+              servicePort: 4005 
+          - path: /api/carpoolings/*
+            backend:
+              serviceName: rc-carpoolinginfo-srv
+              servicePort: 4006
+          - path: /api/pollings/*
+            backend:
+              serviceName: rc-pollinginfo-srv
+              servicePort: 4007 
+          
+          - path: /api/facilities/*
+            backend:
+              serviceName: rc-facilitybookinginfo-srv
+              servicePort: 4008
+          - path: /api/maintenancerequests/*
+            backend:
+              serviceName: rc-maintenanceinfo-srv
+              servicePort: 4009
+          - path: /api/announcements/*
+            backend:
+              serviceName: rc-announcementsinfo-srv
+              servicePort: 4010
+          - path: /api/visitors/*
+            backend:
+              serviceName: rc-visitormgmtinfo-srv
+              servicePort: 4011
           - path: /api/payments/*
             backend:
-              serviceName: rc-payments-srv
-              servicePort: 4012
+              serviceName: rc-paymentsinfo-srv
+              servicePort: 4012       
+                       
           - path: /*
             backend:
               serviceName: rc-frontend-srv

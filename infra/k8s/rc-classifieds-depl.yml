@@ -1,20 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-classifieds-depl
+  name: rc-classifiedsinfo-depl
+  labels:
+    app: rc-classifiedsinfo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-classifieds
+      app: rc-classifiedsinfo
   template:
     metadata:
       labels:
-        app: rc-classifieds
+        app: rc-classifiedsinfo
     spec:
       containers:
-        - name: rc-classifieds
-          image: agni1984/rc-classifieds:v1.0.0-snopshot
+        - name: rc-classifiedsinfo
+          image: agni1984/rc-classifiedsinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/classifiedsinfo?retryWrites=true&w=majority'
@@ -22,12 +24,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-classifieds-srv
+  name: rc-classifiedsinfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-classifieds
+    app: rc-classifiedsinfo
   ports:
-    - name: rc-classifieds
-      protocol: TCP
+    - name: rc-classifiedsinfo
       port: 4005
       targetPort: 4005

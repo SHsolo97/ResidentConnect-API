@@ -35,7 +35,7 @@ mongoose
   .connect('mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority')
   .then(() => {
     app.listen(4001,()=>{
-        console.log('****************************************Contact Info Service: Listening on 4001');
+        console.log('****************************************Contact Info Service: Listening on 4001 now on');
     });
   })
   .catch(err => {
