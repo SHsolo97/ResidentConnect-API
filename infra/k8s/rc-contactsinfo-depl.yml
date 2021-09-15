@@ -18,6 +18,8 @@ spec:
       containers:
         - name: rc-contactsinfo
           image: agni1984/rc-contactsinfo:latest
+          ports:
+            - containerPort: 4001 
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority'

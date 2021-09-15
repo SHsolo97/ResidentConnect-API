@@ -1,7 +1,7 @@
 
 
 const { validationResult } = require('express-validator');
-const axios = require ('axios');
+
 
 const HttpError = require('../models/http-error');
 const mongoose = require('mongoose');
@@ -16,23 +16,6 @@ exports.gethealthStatus= async function(req, res,next) {
     res.status(200).send( returnval);
 }
 
-exports.getAdsList= async function(req, res,next) {
-
-    let ads,count;
-    try {
-        ads = await Advert.find();
-        count = await Advert.find().countDocuments();
-    } catch (err) {
-      const error = new HttpError(
-        'Fetching advertisements failed, please try again later.',
-        500
-      );
-      return next(error);
-    }
-  
-
-    res.json({count: count, ads: ads.map(ad => ad.toObject({ getters: true }))});
-}
 
 exports.getAdById= async function(req, res,next) {
     const adid=req.params.aid;
@@ -152,7 +135,7 @@ exports.getCategories = async function(req, res,next) {
   }
 
 
-  res.json({count: count, categories: categories.map(category => category.toObject({ getters: true }))});
+  res.json({count: count, categories: categories.map(category => category.toObject())});
 
 }
 //router.post('/api/adverts/categories',classifieds_controller.getSubCategories);
@@ -171,7 +154,7 @@ exports.getSubCategories = async function(req, res,next) {
   }
 
 
-  res.json({count: count, subcategories: subcategories.map(subcategory => subcategory.toObject({ getters: true }))});
+  res.json({count: count, subcategories: subcategories.map(subcategory => subcategory.toObject())});
 
 }
 //router.post('/api/adverts/categories/create',classifieds_controller.createCategory);

@@ -5,7 +5,7 @@ const HttpError = require('../models/http-error');
 const mongoose = require('mongoose');
 
 const Classifieds = require('../models/classifieds-info');
-const Classifiedscomments= require('../models/classifieds-comments-info');
+const ClassifiedsComment= require('../models/classifieds-comments-info');
 const Category=require('../models/category-info')
 const SubCategory=require('../models/subcategory-info');
 
@@ -42,24 +42,99 @@ exports.getclassifiedById = async function(req, res,next) {
 //router.post('/api/community/:id/classifieds',contactinfo_controller.getclassifiedsByTags);
 exports.getclassifieds = async function(req, res,next) {
    
+  let classifieds,count;
+  try {
+    classifieds = await Classifieds.find(req.body);
+      count = await Classifieds.find(req.body).countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      `Fetching classifieds failed,  please try again later.`,
+      500
+    );
+    return next(error);
+  }
+ 
+
+
+  res.json({count: count, classifieds: classifieds.map(classified => classified.toObject())});
 
 }
 
 //router.delete('/api/community/:id/classified/:cid',contactinfo_controller.deleteclassfieds);
-exports.deleteclassfied = async function(req, res,next) {
+exports.deleteclassified = async function(req, res,next) {
    
 
 }
 //router.put('/api/community/:id/classified/:cid',contactinfo_controller.editclassfieds);
-exports.editclassfied = async function(req, res,next) {
+exports.editclassified = async function(req, res,next) {
    
 
+  const classifiedid=req.params.cid;
+
+
+    const filter={_id:classifiedid};
+    const update=req.body;
+    let classified;
+    try{
+      classified=await Classifieds.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      
+    }
+  catch (err) {
+    console.log(err);
+      const error = new HttpError(
+        `Something went wrong, could not edit a classified- ${classifiedid}`,
+        500
+      );
+      return next(error);
+    }
+
+    
+if (!classified) {
+  const error = new HttpError(
+    'Could not find a classified for the provided id.',
+    404
+  );
+  return next(error);
+}  
+
+res.status(200).json(classified.toObject() );
 }
 
 //router.post('/api/community/:id/classified/:cid',contactinfo_controller.addComment);
 exports.addComment = async function(req, res,next) {
    
+  console.log(req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+      return next(
+        new HttpError('Invalid inputs passed, please check your data.', 422)
+      );
+    }
 
+ const comment=new ClassifiedsComment(req.body);
+ comment.save();
+ res.status(201).json({ comment });
+}
+
+
+exports.getComments = async function(req, res,next) {
+  let comments,count;
+  try {
+    comments = await ClassifiedsComment.find(req.body);
+      count = await ClassifiedsComment.find(req.body).countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      `Fetching classified's comments failed,  please try again later.`,
+      500
+    );
+    return next(error);
+  }
+ 
+
+
+  res.json({count: count, comments: comments.map(comment => comment.toObject())});
 }
 //router.deleteComment('/api/community/:id/classified/:cid/comment/:commentid',contactinfo_controller.deleteComment);
 exports.deleteComment = async function(req, res,next) {
