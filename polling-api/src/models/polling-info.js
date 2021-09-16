@@ -5,12 +5,11 @@ var Schema = mongoose.Schema;
 
 var pollingInfoSchema = new Schema({
     communityid :{type: String, required: true},
-    cratedby :{type: String, required: true},
+    cratedby :{type: Schema.Types.ObjectId, ref: 'User',required: true},
     question:{type: String, required: true},
-    startdate:{type:String,required:true},
-    enddate:{type:String,requied:true},
+    expiredat:{type:String,required:true},
     answeredby:[
-        {type:String}
+        {type: Schema.Types.ObjectId, ref: 'User',required: true},
     ],
     totalvotes:{type:Number,default:0},
     options:[

@@ -3,7 +3,7 @@ const axios = require ('axios');
 const HttpError = require('../models/http-error');
 const mongoose = require('mongoose');
 
-const paymentsInfo = require('../models/payments-info');
+const PaymentInfo = require('../models/payments-info');
 
 
 exports.gethealthStatus= async function(req, res,next) {
@@ -12,37 +12,72 @@ exports.gethealthStatus= async function(req, res,next) {
   }
 
 //router.get('/api/community/:id/apartment/:aid/payments',payments_Controller.getPaymentInfoByApartmentId);
-exports.getPaymentInfoByApartmentId = async function(req, res,next) {
+exports.searchPayments = async function(req, res,next) {
+    
+    let payments,count;
+   
+    try {
+        payments = await PaymentInfo.find(req.body);
+        count = await PaymentInfo.find(req.body).countDocuments();
+    } catch (err) {
+      const error = new HttpError(
+        `Fetching payments failed,  please try again later.`,
+        500
+      );
+      return next(error);
+    }
+   
+ 
+
+    res.json({count: count, payments: payments.map(payment => payment.toObject())});
 }
 
 
 //router.post('/api/payments/create',payments_Controller.createPayment);
+exports.createPayments   = async function(req, res,next) {
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return next(
+    //       new HttpError('Invalid inputs passed, please check your data.', 422)
+    //     );
+    //   }
+    const payments=req.body;
 
-exports.createPayment = async function(req, res,next) {
-    const recipient=req.body.recipient;
-    const subject=req.body.subject;
-    const body=`maintenance due=Rs ${req.body.amt}`;
-    var email={
-        "subject":subject,
-         "body":body,
-         "recipient":recipient
-    }
-    axios.post('https://zl4i20n7s8.execute-api.ap-south-1.amazonaws.com/dev/sendMail', email)
+  // const payment=new PaymentInfo(req.body);
+   PaymentInfo.insertMany(payments).then(function(docs){ 
+    res.status(201).json( docs );  // Success 
+}).catch(function(error){ 
+    console.log(error)      // Failure 
+});
+
+  
+  
+}
+// exports.createPayment = async function(req, res,next) {
+//     const recipient=req.body.recipient;
+//     const subject=req.body.subject;
+//     const body=`maintenance due=Rs ${req.body.amt}`;
+//     var email={
+//         "subject":subject,
+//          "body":body,
+//          "recipient":recipient
+//     }
+//     axios.post('https://zl4i20n7s8.execute-api.ap-south-1.amazonaws.com/dev/sendMail', email)
     
 
-    .then(res => {}
-        )
-        .catch(err=>{
-            //console.log(err);
-            const error = new HttpError(
-                `Something went wrong, could not send emails`,
-                500
-              );
-              return next(error);
-        })
-    res.status(200).json(email);
+//     .then(res => {}
+//         )
+//         .catch(err=>{
+//             //console.log(err);
+//             const error = new HttpError(
+//                 `Something went wrong, could not send emails`,
+//                 500
+//               );
+//               return next(error);
+//         })
+//     res.status(200).json(email);
 
-}
+// }
 
 
 //router.get('/api/payment/:pid',payments_Controller.getPaymentInfoById);
