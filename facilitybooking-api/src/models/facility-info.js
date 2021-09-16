@@ -10,16 +10,19 @@ var facilitySchema = new Schema({
     default: 'free'},
     rent:{type: Number, required: true,default:0},
     timings :[
-        {
-            day:{type:String},
+        
+            {
+                day:{type:String},
+            
             isclosed:{type:Boolean,default:false},
             opentime:{type:String},
             closetime:{type:String},
             slots:[
                 {starttime:{type:String},
-                endTime:{type:String}}
+                endtime:{type:String}}
             ]
-        }
+            }
+        
 
     ] 
     
