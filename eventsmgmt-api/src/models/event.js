@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var eventSchema = new Schema({
     communityid : {type: Schema.Types.ObjectId, ref: 'community',required: true},
     name:{type: String,required:true},
-    createdAt: { type: Date, default: Date.now() , required: true},
+    createdat: { type: Date, default: Date.now() , required: true},
     organizer: {
         name:{type: String,required:true},
         email:{type: String,required:true},

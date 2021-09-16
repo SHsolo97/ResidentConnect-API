@@ -129,6 +129,32 @@ exports.createCommunity =async function(req, res,next)
    res.status(201).json({ community });
 };
 
+exports.editBlocksInCommunity=async function(req,res,next){
+  var blocks = req.body; 
+  var communityid = req.params.id;
+  let  community;
+  try{
+       community=await Community.findOneAndUpdate({'_id':communityid},{'blockdetails':blocks});
+  
+       const sess = await mongoose.startSession();
+       sess.startTransaction();
+   
+   await community.save({ session: sess });
+        await sess.commitTransaction();
+        res.status(200).send({community});
+
+  }
+  catch (err) {
+      console.log(err);
+      const error = new HttpError(
+        `Something went wrong, could not update a community- ${communityid}`,
+        500
+      );
+      return next(error);
+    }
+   
+
+}
 exports.addBlocksInCommunity=async function(req,res,next){
     var blocks = req.body; 
     var communityid = req.params.id;

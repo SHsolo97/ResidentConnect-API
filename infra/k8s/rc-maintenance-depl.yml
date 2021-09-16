@@ -1,20 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-maintenance-depl
+  name: rc-maintenanceinfo-depl
+  labels:
+    app: rc-maintenanceinfo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-maintenance
+      app: rc-maintenanceinfo
   template:
     metadata:
       labels:
-        app: rc-maintenance
+        app: rc-maintenanceinfo
     spec:
       containers:
-        - name: rc-maintenance
-          image: agni1984/rc-maintenance:v1.0.0-snopshot
+        - name: rc-maintenanceinfo
+          image: agni1984/rc-maintenanceinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/maintenanceinfo?retryWrites=true&w=majority'
@@ -22,12 +24,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-maintenance-srv
+  name: rc-maintenanceinfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-maintenance
+    app: rc-maintenanceinfo
   ports:
-    - name: rc-maintenance
-      protocol: TCP
+    - name: rc-maintenanceinfo
       port: 4009
       targetPort: 4009

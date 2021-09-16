@@ -13,11 +13,12 @@ router.post('/api/classifieds/create',classifieds_controller.createClassfied);
 
 router.get('/api/classifieds/:cid',classifieds_controller.getclassifiedById);
 
-router.post('/api/classifieds',classifieds_controller.getclassifieds);
-router.delete('/api/classifieds/:cid',classifieds_controller.deleteclassfied);
-router.put('/api/classifieds/:cid',classifieds_controller.editclassfied);
+router.post('/api/classifieds/search',classifieds_controller.getclassifieds);
+router.delete('/api/classifieds/:cid',classifieds_controller.deleteclassified);
+router.put('/api/classifieds/:cid',classifieds_controller.editclassified);
 
-router.post('/api/classifieds/:cid',classifieds_controller.addComment);
+router.post('/api/classifieds/comment/create',classifieds_controller.addComment);
+router.post('/api/classifieds/comments/search',classifieds_controller.getComments);
 router.delete('/api/classifieds/:cid/comment/:commentid',classifieds_controller.deleteComment);
 router.put('/api/classifieds/:cid/comment/:commentid',classifieds_controller.editComment);
 router.post('/api/classifieds/categories/create',classifieds_controller.createCategory);

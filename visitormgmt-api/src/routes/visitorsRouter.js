@@ -5,9 +5,9 @@ const { check } = require('express-validator');
 var router = express.Router();
 var visitors_Controller = require('../controllers/visitorsController');
 
-router.get('/api/visitor/health-status',visitors_Controller.gethealthStatus);
+router.get('/api/visitors/health-status',visitors_Controller.gethealthStatus);
 
-router.post('/api/visitor/create',visitors_Controller.createVisitor);
+router.post('/api/visitors/create',visitors_Controller.createVisitor);
 
 router.get('/api/visitors/:vid',visitors_Controller.getvisitorById);
 router.put('/api/visitors/:vid',visitors_Controller.editvisitor);

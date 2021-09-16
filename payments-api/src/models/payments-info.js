@@ -5,16 +5,29 @@ const uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
 var paymentsinfoSchema = new Schema({
-    communityid : {type: String},
-    apartmentid : {type:String},
+    communityid : {type: Schema.Types.ObjectId, ref: 'community',required: true},
+    communityname :{type:String},
+
+    apartmentid : {type: Schema.Types.ObjectId, ref: 'apartments',required: true},
+    aptnum : {type:String},
+
     period: {type:String},
     category:{type:String},   
     createdat:{type:Date,required: true, default: Date.now},
-    dueat:{type:String},
+    dueat:{type:Date,required: true},
     amt:{type:Number},
-    status:{type:String}
+    status:{type: String,
+        enum:  ['overdue', 'due', 'paid'],
+        default: 'due'
+    },
+    paidon:{type:Date},
+    paymentdetails:{
+        type:{type: String},
+        cardnumber:{type:Number},
+        accountnumber:{type:String}
+    }
   
     
 });
 
-module.exports =mongoose.model('paymentsinfo', paymentsinfoSchema );
+module.exports =mongoose.model('payments', paymentsinfoSchema );

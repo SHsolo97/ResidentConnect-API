@@ -19,7 +19,9 @@ var communitySchema = new Schema({
       area : {type: String,default:''},
       city: {type: String,default:''},
       state : {type: String,default:''},
-      pincode : {type: String,default:''}
+      pincode : {type: String,default:''},
+    
+
 },
 
 blockdetails:[
@@ -35,7 +37,15 @@ blockdetails:[
           }              
       ]
   }
-]
+],
+paidservices:
+{
+  carpooling : {type:Boolean,required:true,default:false},
+  facility : {type:Boolean,required:true,default:false},
+  maintenance : {type:Boolean,required:true,default:false},
+  polling : {type:Boolean,required:true,default:false},
+  visitor : {type:Boolean,required:true,default:false}
+}
     
    
 });

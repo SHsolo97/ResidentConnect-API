@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rc-eventsmgmt-depl
+  name: rc-eventsmgmtinfo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rc-eventsmgmt
+      app: rc-eventsmgmtinfo
   template:
     metadata:
       labels:
-        app: rc-eventsmgmt
+        app: rc-eventsmgmtinfo
     spec:
       containers:
-        - name: rc-eventsmgmt
-          image: agni1984/rc-eventsmgmt:v1.0.0-snopshot
+        - name: rc-eventsmgmtinfo
+          image: agni1984/rc-eventsmgmtinfo:latest
           env:
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/eventmgmtinfo?retryWrites=true&w=majority'
@@ -22,12 +22,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: rc-eventsmgmt-srv
+  name: rc-eventsmgmtinfo-srv
 spec:
+  type: ClusterIP
   selector:
-    app: rc-eventsmgmt
+    app: rc-eventsmgmtinfo
   ports:
-    - name: rc-eventsmgmt
-      protocol: TCP
+    - name: rc-eventsmgmtinfo
       port: 4003
       targetPort: 4003

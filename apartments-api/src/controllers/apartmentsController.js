@@ -59,6 +59,28 @@ exports.apartments_list = async function(req, res,next) {
 
     res.json({count: count, apartments: apartments.map(apartment => apartment.toObject({ getters: true }))});
 };
+exports.apartments_search = async function(req, res,next) {
+
+  let apartments,count;
+   
+  try {
+      apartments = await Apartment.find(req.body);
+      count = await Apartment.find(req.body).countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      `Fetching apartments failed,  please try again later.`,
+      500
+    );
+    return next(error);
+  }
+ 
+
+
+  res.json({count: count, apartments: apartments.map(apartment => apartment.toObject())});
+
+  
+};
+
 
 exports.apartment_details = async function(req, res,next) {
     const apartmentid=req.params.apartmentid;  
@@ -94,9 +116,9 @@ exports.apartment_create_post = async function(req, res,next) {
           new HttpError('Invalid inputs passed, please check your data.', 422)
         );
       }
-      const communityid=req.params.communityid;  
-      const apartment=new Apartment(req.body);
-      apartment.communityid=communityid;
+      const communityid=req.body.communityid
+       const apartment=new Apartment(req.body);
+     
       let query;
      try{
           const sess = await mongoose.startSession();
