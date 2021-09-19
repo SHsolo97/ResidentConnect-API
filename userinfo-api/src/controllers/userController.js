@@ -86,7 +86,8 @@ exports.createUser = async function(req, res,next) {
 }
 exports.addApartmentToUser= async function(req, res,next) {
     const userid=req.params.uid;
-    const aptid=req.body.apartmentid;
+    const data=req.body;
+
     let user;
  /************* Fetch User by id*************************** */
     try{
@@ -115,7 +116,7 @@ exports.addApartmentToUser= async function(req, res,next) {
   
     const sess = await mongoose.startSession();
     sess.startTransaction();  
-    user.apartments.push(aptid);
+    user.apartments.push(data);
     await user.save({ session: sess });    
     await sess.commitTransaction();
   
@@ -131,20 +132,6 @@ exports.addApartmentToUser= async function(req, res,next) {
   }
 
  
-  
-  const body={userid:user._id};
-  axios.patch(`http://rc-apartments-srv:4000/api/apartment/${aptid}/user/add`, body)
- .then(res => {}
- )
- .catch(err=>{
-     //console.log(err);
-     const error = new HttpError(
-         'Something went wrong. User is not added in apartment object',
-         500
-       );
-       return next(error);
- })
-
   
   res.json(user.toObject() );
 
