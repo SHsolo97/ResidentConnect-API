@@ -7,8 +7,7 @@ var announcementInfoSchema = new Schema({
     communityid : {type: String},
     description:{type:String},
     createdby:{type:String},
-    createdat:{type:Date},
-    expiredat:{type:Date}
+    createdat:{type:Date}
    
 });
 // Compile model from schema
