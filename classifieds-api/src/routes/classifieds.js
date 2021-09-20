@@ -19,7 +19,7 @@ router.put('/api/classifieds/:cid',classifieds_controller.editclassified);
 router.post('/api/classifieds/comment/create',classifieds_controller.addComment); //done
 router.post('/api/classifieds/comments/search',classifieds_controller.getComments); //done
 router.delete('/api/classifieds/comments/:commentid',classifieds_controller.deleteComment); //done
-router.put('/api/classifieds/comments/:commentid',classifieds_controller.editComment);
+router.put('/api/classifieds/comments/:commentid',classifieds_controller.editComment); //done
 router.post('/api/classifieds/categories/create',classifieds_controller.createCategory); //done
 router.post('/api/classifieds/subcategories/create',classifieds_controller.createSubCategory); //done
 
