@@ -32,12 +32,6 @@ exports.createClassfied = async function(req, res,next) {
 
 }
 
-//router.get('/api/community/:id/classified/:cid',classifieds_controller.getclassifiedById);
-exports.getclassifiedById = async function(req, res,next) {
-   
-
-}
-
 
 //router.post('/api/community/:id/classifieds',contactinfo_controller.getclassifiedsByTags);
 exports.getclassifieds = async function(req, res,next) {
@@ -62,7 +56,27 @@ exports.getclassifieds = async function(req, res,next) {
 
 //router.delete('/api/community/:id/classified/:cid',contactinfo_controller.deleteclassfieds);
 exports.deleteclassified = async function(req, res,next) {
-   
+  const cid=req.params.cid;  
+  let classified;
+
+  try {
+    classified=await Classifieds.findById(cid).populate();
+    classified.remove();
+     } catch (err) {
+         console.log(err);
+         const error = new HttpError(
+           'Something went wrong, could not delete classified.',
+           500
+         );
+         return next(error);
+       }
+       if (!classified) {
+         const error = new HttpError('Could not find classified for this id.', 404);
+         return next(error);
+       } 
+    
+    
+     res.status(200).json({ message: 'Deleted classified.' });
 
 }
 //router.put('/api/community/:id/classified/:cid',contactinfo_controller.editclassfieds);
@@ -138,14 +152,64 @@ exports.getComments = async function(req, res,next) {
 }
 //router.deleteComment('/api/community/:id/classified/:cid/comment/:commentid',contactinfo_controller.deleteComment);
 exports.deleteComment = async function(req, res,next) {
-   
+  const commentid=req.params.commentid;  
+  let comment;
+
+  try {
+    comment=await ClassifiedsComment.findById(commentid).populate();
+    comment.remove();
+     } catch (err) {
+         console.log(err);
+         const error = new HttpError(
+           'Something went wrong, could not delete comment.',
+           500
+         );
+         return next(error);
+       }
+       if (!comment) {
+         const error = new HttpError('Could not find comment for this id.', 404);
+         return next(error);
+       } 
+    
+    
+     res.status(200).json({ message: 'Deleted comment.' });
 
 }
 
 //router.put('/api/community/:id/classified/:cid/comment/:commentid',contactinfo_controller.editComment);
 exports.editComment = async function(req, res,next) {
    
+  const commentid=req.params.commentid;
 
+
+  const filter={_id:commentid};
+  const update=req.body;
+  let comment;
+  try{
+    comment=await ClassifiedsComment.findOneAndUpdate(filter, update, {
+      new: true
+    });
+    
+  }
+catch (err) {
+  console.log(err);
+    const error = new HttpError(
+      `Something went wrong, could not edit a comment- ${commentid}`,
+      500
+    );
+    return next(error);
+  }
+
+  
+if (!comment) {
+const error = new HttpError(
+  'Could not find a comment for the provided id.',
+  404
+);
+return next(error);
+}  
+
+res.status(200).json(comment.toObject() );
 }
 
 //router.get('/api/classifieds/categories',classifieds_controller.getCategories);
