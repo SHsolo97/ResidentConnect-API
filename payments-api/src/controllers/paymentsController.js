@@ -87,6 +87,37 @@ exports.getPaymentInfoById = async function(req, res,next) {
 
 //router.put('/api/payments/:pid',payments_Controller.editPaymentInfo);
 exports.editPaymentInfo = async function(req, res,next) {
+  const pid=req.params.pid;
+
+
+    const filter={_id:pid};
+    const update=req.body;
+    let payment;
+    try{
+      payment=await PaymentInfo.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      
+    }
+  catch (err) {
+    console.log(err);
+      const error = new HttpError(
+        `Something went wrong, could not edit a payment- ${pid}`,
+        500
+      );
+      return next(error);
+    }
+
+    
+if (!payment) {
+  const error = new HttpError(
+    'Could not find a payment for the provided id.',
+    404
+  );
+  return next(payment);
+}  
+
+res.status(200).json(payment.toObject() );
 }
 
 

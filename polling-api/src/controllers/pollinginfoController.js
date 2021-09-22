@@ -76,5 +76,50 @@ res.json(poll.toObject() );
 //router.put('/api/community/:id/polling/:pid',pollinginfo_Controller.updatePolling);
 exports.updatePolling = async function(req, res,next) {
    
+  const pid=req.params.pid;
+
+
+  const filter={
+    _id:pid,
+    'options._id':req.body.optionid};
+  
+  const update = {
+    $set:{'totalvotes':req.body.totalvotes,
+      'options.$.votes':req.body.selectedoptionvotes },
+    $push: {'answeredby':req.body.answeredby},
+}
+  let poll;
+  try{
+    poll=await Polling.findOneAndUpdate(filter, update,
+      {new: true}
+    );
+    poll=await Polling.findOneAndUpdate(filter,{
+      
+       update}
+       , {
+      new: true
+    });
+    
+  }
+catch (err) {
+  console.log(err);
+    const error = new HttpError(
+      `Something went wrong, could not edit a poll- ${pid}`,
+      500
+    );
+    return next(error);
+  }
+
+  
+if (!poll) {
+const error = new HttpError(
+  'Could not find a poll for the provided id.',
+  404
+);
+return next(error);
+
+} 
+
+res.status(200).json(poll.toObject() );
 
 }

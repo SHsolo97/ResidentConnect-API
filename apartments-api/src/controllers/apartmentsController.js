@@ -192,6 +192,33 @@ exports.apartment_create_post = async function(req, res,next) {
    res.status(201).json({ apartment });
 
 };
+
+exports.getSummary= async function(req, res,next) {
+   
+
+  Apartment.aggregate([
+      {$match:{"communityid": new mongoose.Types.ObjectId(req.body.communityid)}}, 
+      {
+          $group:
+          {
+              _id: { status: "$status" },
+              total: { $sum: 1 },
+          }
+      }
+  ])
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => {
+        console.log(err);
+        const error = new HttpError(
+          `Something went wrong,`,
+          500
+        );
+        return next(error);
+      })
+
+}
 exports.apartment_update = async function(req, res) {
     const apartmentid=req.params.apartmentid;
   

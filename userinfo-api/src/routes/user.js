@@ -6,7 +6,7 @@ var router = express.Router();
 var user_controller = require('../controllers/userController');
 
 router.get('/api/users/health-status',user_controller.gethealthStatus);
-
+router.post('/api/users/summary',user_controller.getSummary);
 router.get('/api/users',user_controller.getUsers); //returns all users
 router.post('/api/users/search',user_controller.searchUsers); //search user by various filter
 router.get('/api/users/:uid',user_controller.getUserById); //done

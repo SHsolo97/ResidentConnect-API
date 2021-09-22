@@ -19,5 +19,5 @@ router.post('/api/community/apartment/create',apartments_Controller.apartment_cr
 router.put('/api/community/apartment/:apartmentid',apartments_Controller.apartment_update);
 //router.patch('/api/apartment/:apartmentid/user/add',apartments_Controller.addUserToApartment);
 //router.patch('/api/apartment/:apartmentid/user/remove',apartments_Controller.removeUserFromApartment);
-
+router.post('/api/community/apartments/summary',apartments_Controller.getSummary);
 module.exports = router;

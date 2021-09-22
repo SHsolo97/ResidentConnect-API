@@ -27,6 +27,33 @@ exports.getUsers = async function(req, res,next) {
 
     res.json({count: count, users: users.map(user => user.toObject())});
 }
+exports.getSummary= async function(req, res,next) {
+  let summary,count;
+   
+
+ User.aggregate([
+      {$match:{"communities": new mongoose.Types.ObjectId(req.body.communities)}}, 
+      {
+          $group:
+          {
+              _id: { type: "$type" },
+              total: { $sum: 1 },
+          }
+      }
+  ])
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => {
+        console.log(err);
+        const error = new HttpError(
+          `Something went wrong,`,
+          500
+        );
+        return next(error);
+      })
+
+}
 exports.getUserById = async function(req, res,next) {
     const userid=req.params.uid;
     let user;
