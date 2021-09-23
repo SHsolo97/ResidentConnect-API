@@ -5,9 +5,10 @@ var Schema = mongoose.Schema;
 
 var announcementInfoSchema = new Schema({
     communityid : {type: String},
+    title:{type:String},
     description:{type:String},
-    createdby:{type:String},
-    createdat:{type:Date}
+    createdby:{type: Schema.Types.ObjectId, ref: 'User',required: true},
+    createdat:{type:Date,default: Date.now() , required: true}
    
 });
 // Compile model from schema

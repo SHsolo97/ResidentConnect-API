@@ -2,10 +2,10 @@
 
 
 const { validationResult } = require('express-validator');
-const axios = require ('axios');
+
 
 const HttpError = require('../models/http-error');
-const mongoose = require('mongoose');
+
 
 const Announcement = require('../models/announcement-info');
 
@@ -29,7 +29,7 @@ exports.searchAnnouncements= async function(req, res,next) {
  
 
 
-  res.json({count: count, announcements: announcements.map(announcement => user.toObject())});
+  res.json({count: count, announcements: announcements.map(announcement => announcement.toObject())});
 }
 
 
@@ -58,7 +58,65 @@ if (!announcement) {
 }  
 res.json(announcement.toObject() );
 }
+//router.put('/api/announcements/:aid',announcement_Controller.editAnnouncementbyId);
+exports.editAnnouncementbyId= async function(req, res,next) {
+  const aid=req.params.aid;
 
+
+  const filter={_id:aid};
+  const update=req.body;
+  let announcement;
+  try{
+    announcement=await Announcement.findOneAndUpdate(filter, update, {
+      new: true
+    });
+    
+  }
+catch (err) {
+  console.log(err);
+    const error = new HttpError(
+      `Something went wrong, could not edit a announcement- ${aid}`,
+      500
+    );
+    return next(error);
+  }
+
+  
+if (!announcement) {
+const error = new HttpError(
+  'Could not find a announcement for the provided id.',
+  404
+);
+return next(error);
+}  
+
+res.status(200).json(announcement.toObject() );
+}
+
+//router.delete('/api/announcements/:aid',announcement_Controller.deleteAnnouncementbyId);
+exports.deleteAnnouncementbyId= async function(req, res,next) {
+  const aid=req.params.aid;  
+  let announcement;
+
+  try {
+    announcement=await Announcement.findById(aid).populate();
+    announcement.remove();
+     } catch (err) {
+         console.log(err);
+         const error = new HttpError(
+           'Something went wrong, could not delete announcement.',
+           500
+         );
+         return next(error);
+       }
+       if (!announcement) {
+         const error = new HttpError('Could not find announcement for this id.', 404);
+         return next(error);
+       } 
+    
+    
+     res.status(200).json({ message: 'Deleted announcement.' });
+}
 //router.post('/api/community/:cid/announcements/create',advert_Controller.createAnnouncement);
 exports.createAnnouncement= async function(req, res,next) {
   const errors = validationResult(req);
