@@ -11,7 +11,7 @@ const announcementRouter = require('./routes/announcementRouter');
 
 const app = express();
 app.use(bodyParser.json());
-
+app.use(cors());
 app.use(announcementRouter);
 
 app.use((req, res, next) => {
