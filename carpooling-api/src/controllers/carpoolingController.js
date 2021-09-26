@@ -195,7 +195,7 @@ exports.searchRideRequest= async function(req, res,next) {
   let ridereqs,count;
    
     try {
-      ridereqs = await RideRequest.find(req.body);
+      ridereqs = await RideRequest.find(req.body).populate('ride');
         count = await RideRequest.find(req.body).countDocuments();
     } catch (err) {
       const error = new HttpError(

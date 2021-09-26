@@ -4,9 +4,8 @@ const uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
 var riderequestSchema = new Schema({
-    rideid : {type: Schema.Types.ObjectId, ref: 'ride',required: true},
-    rideowner:{type: Schema.Types.ObjectId, ref: 'User',required: true},
-
+    ride : {type: Schema.Types.ObjectId, ref: 'ride',required: true},
+    owner:{type: Schema.Types.ObjectId, ref: 'User',required: true},
     seats:{type:Number},
     requestedby:{type: Schema.Types.ObjectId, ref: 'User',required: true},
     status: {type:String, required:true, enum:  ['pending', 'approved','rejected'], default: 'pending'},
