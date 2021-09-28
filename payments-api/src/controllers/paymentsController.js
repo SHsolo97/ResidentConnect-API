@@ -17,7 +17,7 @@ exports.searchPayments = async function(req, res,next) {
     let payments,count;
    
     try {
-        payments = await PaymentInfo.find(req.body);
+        payments = await PaymentInfo.find(req.body).sort({dueat:-1});
         count = await PaymentInfo.find(req.body).countDocuments();
     } catch (err) {
       const error = new HttpError(
@@ -30,6 +30,25 @@ exports.searchPayments = async function(req, res,next) {
  
 
     res.json({count: count, payments: payments.map(payment => payment.toObject())});
+}
+exports.getPaymentHistory = async function(req, res,next) {
+    
+  let payments,count;
+ 
+  try {
+      payments = await PaymentInfo.find(req.body).sort({paidat:-1});
+      count = await PaymentInfo.find(req.body).countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      `Fetching payments failed,  please try again later.`,
+      500
+    );
+    return next(error);
+  }
+ 
+
+
+  res.json({count: count, payments: payments.map(payment => payment.toObject())});
 }
 
 
