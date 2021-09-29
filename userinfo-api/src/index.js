@@ -27,8 +27,8 @@ app.use((req, res, next) => {
 
 
 mongoose
-  //.connect(process.env.MONGO_URI)
-  .connect('mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/usersinfo?retryWrites=true&w=majority')
+  .connect(process.env.MONGO_URI)
+  //.connect('mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/usersinfo?retryWrites=true&w=majority')
   .then(() => {
     app.listen(4002,()=>{
         console.log('****************************************User Info Service: Listening on 4002');

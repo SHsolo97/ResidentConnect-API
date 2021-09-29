@@ -28,23 +28,44 @@ metadata:
 spec:
   rules:
     - http:
-        paths:
+        paths:        
           - path: /* # SSL Redirect Setting
             backend:
               serviceName: ssl-redirect
               servicePort: use-annotation
+          - path: /api/community/*
+            backend:
+              serviceName: rc-apartments-srv
+              servicePort: 4000
           - path: /api/contacts/*
             backend:
               serviceName: rc-contactsinfo-srv
-              servicePort: 4001
+              servicePort: 4001   
+          - path: /api/users/*
+            backend:
+              serviceName: rc-users-srv
+              servicePort: 4002    
+          - path: /api/adverts/*
+            backend:
+              serviceName: rc-buyandsell-srv
+              servicePort: 4004 
+          - path: /api/classifieds/*
+            backend:
+              serviceName: rc-classifieds-srv
+              servicePort: 4005
+          - path: /api/carpoolings/*
+            backend:
+              serviceName: rc-carpooling-srv
+              servicePort: 4006 
+          - path: /api/pollings/*
+            backend:
+              serviceName: rc-polling-srv
+              servicePort: 4007        
+          - path: /api/announcements/*
+            backend:
+              serviceName: rc-announcements-srv
+              servicePort: 4010
           - path: /api/payments/*
             backend:
               serviceName: rc-payments-srv
               servicePort: 4012
-          - path: /*
-            backend:
-              serviceName: rc-frontend-srv
-              servicePort: 3000
-      
-
-    

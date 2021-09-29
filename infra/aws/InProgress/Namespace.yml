@@ -1,0 +1,5 @@
+#kubectl apply -f Namespace.yml
+apiVersion: v1
+kind: Namespace
+metadata: 
+  name: ns-dev

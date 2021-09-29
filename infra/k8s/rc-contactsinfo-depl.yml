@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: rc-contactsinfo
-          image: agni1984/rc-contactsinfo:latest
+          image: agni1984/rc-contactsinfo
           ports:
             - containerPort: 4001 
           env:

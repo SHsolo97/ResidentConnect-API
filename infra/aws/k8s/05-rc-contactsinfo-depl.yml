@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: rc-contactsinfo
-          image: agni1984/rc-contactsinfo:v0.0.6          
+          #image: 860905879962.dkr.ecr.ap-south-1.amazonaws.com/rc-contactsinfo:latest      
+          image: CONTAINER_IMAGE_CONTACTS
           ports: 
             - containerPort: 4001 
           env:

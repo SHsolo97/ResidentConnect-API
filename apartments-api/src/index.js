@@ -35,8 +35,8 @@ app.use((req, res, next) => {
 
  
 mongoose
-  //.connect( process.env.MONGO_URI)
-  .connect('mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority')
+  .connect( process.env.MONGO_URI)
+  //.connect('mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/apartmentsinfo?retryWrites=true&w=majority')
   .then(() => {
     app.listen(4000,()=>{
         console.log('****************************************Apartment Info Service: Listening on 4000');

@@ -12,7 +12,8 @@ sendMail =async (recipient,dueamt)=>{
          "body":body,
          "recipient":recipient
     }
-    await axios.post('https://zl4i20n7s8.execute-api.ap-south-1.amazonaws.com/dev/sendMail', email)
+    //await axios.post('https://zl4i20n7s8.execute-api.ap-south-1.amazonaws.com/dev/sendMail', email)
+    await axios.post(`${process.env.NOTIFICATION_URI}/sendMail`,email)
         .then(res => {}
         )
         .catch(err=>{
