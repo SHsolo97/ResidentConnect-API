@@ -34,7 +34,7 @@ catch (err) {
 
   
   const returnval=`token '${token}' found`;
-  res.status(200).json(community.toObject({ getters: true }) );
+  res.status(200).json(returnval);
 
 }
 exports.community_list = async function(req, res,next) {
