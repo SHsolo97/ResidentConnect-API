@@ -1,8 +1,8 @@
 FROM node:alpine
 
 WORKDIR /app
-COPY package.json ./
+COPY payments-api/package.json ./
 RUN npm install
-COPY ./ ./
+COPY payments-api/ ./
 
 CMD ["npm","start"]

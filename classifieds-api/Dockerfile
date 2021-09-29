@@ -1,8 +1,8 @@
 FROM node:alpine
 
 WORKDIR /app
-COPY package.json ./
+COPY classifieds-api/package.json ./
 RUN npm install
-COPY ./ ./
+COPY classifieds-api/ ./
 
 CMD ["npm","start"]
