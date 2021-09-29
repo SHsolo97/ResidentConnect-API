@@ -69,7 +69,7 @@ phases:
       - docker push $REPOSITORY_PAYMENTS_URI:$TAG
       - echo "Docker Image Push to ECR Completed -  $REPOSITORY_PAYMENTS_URI:$TAG" 
 
-      - docker push REPOSITORY_POLLING_URI:$TAG
+      - docker push $REPOSITORY_POLLING_URI:$TAG
       - echo "Docker Image Push to ECR Completed -  $REPOSITORY_POLLING_URI:$TAG" 
 
       - docker push $REPOSITORY_USERS_URI:$TAG
