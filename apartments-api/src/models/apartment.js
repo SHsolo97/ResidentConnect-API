@@ -32,7 +32,6 @@ var apartmentschema = new Schema({
     },
       
     issold : {type: Boolean, default:false,required: true},
-    enrolled:{type: Number,  max: 10, required: true,default:0},
 
     status:{
         type: String,

@@ -1,8 +1,8 @@
 FROM node:alpine
 
 WORKDIR /app
-COPY package.json ./
+COPY buyandsell-api/package.json ./
 RUN npm install
-COPY ./ ./
+COPY buyandsell-api/ ./
 
 CMD ["npm","start"]

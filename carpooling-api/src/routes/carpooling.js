@@ -6,9 +6,19 @@ var router = express.Router();
 var carpooling_Controller = require('../controllers/carpoolingController');
 router.get('/api/carpoolings/health-status',carpooling_Controller.gethealthStatus);
 
-router.post('/api/carpoolings',carpooling_Controller.getcarpoolings); 
-router.get('/api/carpoolings/:cid',carpooling_Controller.getcarpoolingById); 
+router.post('/api/carpoolings/rides/create',carpooling_Controller.createRide); 
+router.post('/api/carpoolings/rides/search',carpooling_Controller.searchRides); 
+router.post('/api/carpoolings/rides/filter',carpooling_Controller.filterRides); 
+
+router.get('/api/carpoolings/rides/:rideid',carpooling_Controller.getRideById); 
+router.put('/api/carpoolings/rides/:rideid',carpooling_Controller.editRideById); 
+router.delete('/api/carpoolings/rides/:rideid',carpooling_Controller.deleteRideById); 
+
+router.post('/api/carpoolings/riderequests/create',carpooling_Controller.raiseRideRequest);
+router.post('/api/carpoolings/riderequests/search',carpooling_Controller.searchRideRequest);
+router.get('/api/carpoolings/riderequests/:requestid',carpooling_Controller.getRideRequestById);
+router.put('/api/carpoolings/riderequests/:requestid',carpooling_Controller.editRideRequestById);
+router.delete('/api/carpoolings/riderequests/:requestid',carpooling_Controller.deleteRideRequestById);
 
 
-router.post('/api/carpoolings/create',carpooling_Controller.createCarpooling); 
 module.exports = router;

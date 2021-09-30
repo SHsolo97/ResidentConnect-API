@@ -3,7 +3,7 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
+      - ./infra/aws/k8s/*
 build:
   local:
     push: false
@@ -48,14 +48,14 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-eventsmgmtinfo
-      context: eventsmgmt-api
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.js'
-            dest: .
+    # - image: agni1984/rc-eventsmgmtinfo
+    #   context: eventsmgmt-api
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.js'
+    #         dest: .
     - image: agni1984/rc-pollinginfo
       context: polling-api
       docker:
@@ -64,22 +64,22 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-facilitybookinginfo
-      context: facilitybooking-api
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.js'
-            dest: .
-    - image: agni1984/rc-maintenanceinfo
-      context: maintenance-api
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.js'
-            dest: .
+    # - image: agni1984/rc-facilitybookinginfo
+    #   context: facilitybooking-api
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.js'
+    #         dest: .
+    # - image: agni1984/rc-maintenanceinfo
+    #   context: maintenance-api
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.js'
+    #         dest: .
     - image: agni1984/rc-usersinfo
       context: userinfo-api
       docker:
@@ -96,14 +96,14 @@ build:
         manual:
           - src: 'src/**/*.js'
             dest: .
-    - image: agni1984/rc-visitormgmtinfo
-      context: visitormgmt-api
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.js'
-            dest: .
+    # - image: agni1984/rc-visitormgmtinfo
+    #   context: visitormgmt-api
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.js'
+    #         dest: .
     - image: agni1984/rc-paymentsinfo
       context: payments-api
       docker:

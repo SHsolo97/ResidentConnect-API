@@ -1,8 +1,8 @@
 FROM node:alpine
 
 WORKDIR /app
-COPY package.json ./
+COPY polling-api/package.json ./
 RUN npm install
-COPY ./ ./
+COPY polling-api/ ./
 
 CMD ["npm","start"]

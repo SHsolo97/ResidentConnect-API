@@ -45,6 +45,10 @@ paidservices:
   maintenance : {type:Boolean,required:true,default:false},
   polling : {type:Boolean,required:true,default:false},
   visitor : {type:Boolean,required:true,default:false}
+},
+geo:{
+  lat:{type:Number,required:true,default:0},
+  lng:{type:Number,required:true,default:0}
 }
     
    

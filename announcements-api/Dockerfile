@@ -1,8 +1,8 @@
 FROM node:alpine
 
 WORKDIR /app
-COPY package.json ./
+COPY announcements-api/package.json ./
 RUN npm install
-COPY ./ ./
+COPY announcements-api/ ./
 
 CMD ["npm","start"]

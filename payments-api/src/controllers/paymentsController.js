@@ -17,7 +17,7 @@ exports.searchPayments = async function(req, res,next) {
     let payments,count;
    
     try {
-        payments = await PaymentInfo.find(req.body);
+        payments = await PaymentInfo.find(req.body).sort({dueat:-1});
         count = await PaymentInfo.find(req.body).countDocuments();
     } catch (err) {
       const error = new HttpError(
@@ -30,6 +30,25 @@ exports.searchPayments = async function(req, res,next) {
  
 
     res.json({count: count, payments: payments.map(payment => payment.toObject())});
+}
+exports.getPaymentHistory = async function(req, res,next) {
+    
+  let payments,count;
+ 
+  try {
+      payments = await PaymentInfo.find(req.body).sort({paidat:-1});
+      count = await PaymentInfo.find(req.body).countDocuments();
+  } catch (err) {
+    const error = new HttpError(
+      `Fetching payments failed,  please try again later.`,
+      500
+    );
+    return next(error);
+  }
+ 
+
+
+  res.json({count: count, payments: payments.map(payment => payment.toObject())});
 }
 
 
@@ -87,6 +106,37 @@ exports.getPaymentInfoById = async function(req, res,next) {
 
 //router.put('/api/payments/:pid',payments_Controller.editPaymentInfo);
 exports.editPaymentInfo = async function(req, res,next) {
+  const pid=req.params.pid;
+
+
+    const filter={_id:pid};
+    const update=req.body;
+    let payment;
+    try{
+      payment=await PaymentInfo.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      
+    }
+  catch (err) {
+    console.log(err);
+      const error = new HttpError(
+        `Something went wrong, could not edit a payment- ${pid}`,
+        500
+      );
+      return next(error);
+    }
+
+    
+if (!payment) {
+  const error = new HttpError(
+    'Could not find a payment for the provided id.',
+    404
+  );
+  return next(payment);
+}  
+
+res.status(200).json(payment.toObject() );
 }
 
 
