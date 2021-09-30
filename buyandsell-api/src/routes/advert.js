@@ -13,7 +13,6 @@ router.post('/api/adverts/search',advert_Controller.getAds); //different search 
 router.get('/api/adverts/:aid',advert_Controller.getAdById); //done
 router.delete('/api/adverts/:aid',advert_Controller.deleteAdById); 
 
-router.post('/api/adverts/',advert_Controller.getAds); //different search bycity, by distance
 
 router.post('/api/adverts/create',advert_Controller.createAd); //done
 module.exports = router;

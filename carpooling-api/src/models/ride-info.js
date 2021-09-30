@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var rideSchema = new Schema({
     communityid : {type: Schema.Types.ObjectId, ref: 'community',required: true},
     creator:{type: Schema.Types.ObjectId, ref: 'User',required: true},
-    car: {type:String},
+    car: {type:String,required: true},
     amt:{type:Number},
     source: {
         addressline : {type: String,default:''},

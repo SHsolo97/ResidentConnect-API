@@ -63,7 +63,7 @@ exports.create_ApartmentModel = async function(req, res,next) {
 
    const model=new ApartmentModel(req.body);
    model.save();
-   res.status(201).json({ model });
+   res.status(201).json( model );
 
 }
 

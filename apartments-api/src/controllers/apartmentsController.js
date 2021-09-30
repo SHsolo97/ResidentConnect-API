@@ -35,8 +35,7 @@ catch (err) {
   }
 
   
-  const returnval=`token '${token}' found`;
-  res.status(200).json(apartment.toObject({ getters: true }) );
+  res.status(200).json(apartment.toObject() );
 }
 
 exports.apartments_list = async function(req, res,next) {
@@ -123,7 +122,10 @@ exports.apartment_create_post = async function(req, res,next) {
      try{
           const sess = await mongoose.startSession();
         sess.startTransaction();
-        //console.log(community);
+        console.log(req.body);
+        console.log(communityid);
+        console.log(req.body.communityid);
+        console.log(apartment.block);
         query=await Community.findOne({'_id':communityid,'blockdetails.block':apartment.block}).populate('blockdetails');
         //console.log(blocks);
         if(query===null)

@@ -23,7 +23,7 @@ var paymentsinfoSchema = new Schema({
     paidon:{type:Date},
     paymentdetails:{
         type:{type: String},
-        cardnumber:{type:Number},
+        cardnumber:{type:String},
         accountnumber:{type:String}
     }
   

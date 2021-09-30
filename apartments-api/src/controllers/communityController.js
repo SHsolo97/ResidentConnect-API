@@ -33,8 +33,9 @@ catch (err) {
   }
 
   
-  const returnval=`token '${token}' found`;
-  res.status(200).json(returnval);
+
+ 
+  res.status(200).json(community.toObject() );
 
 }
 exports.community_list = async function(req, res,next) {
@@ -83,7 +84,7 @@ if (!community) {
   );
   return next(error);
 }  
-res.json(community.toObject({ getters: true }) );
+res.json(community.toObject() );
 }
 exports.getCommunityById = async function(req, res,next) {
     const communityid=req.params.id;
@@ -126,7 +127,7 @@ exports.createCommunity =async function(req, res,next)
 
    const community=new Community(req.body);
    community.save();
-   res.status(201).json({ community });
+   res.status(201).json( community );
 };
 
 exports.editBlocksInCommunity=async function(req,res,next){
@@ -141,7 +142,7 @@ exports.editBlocksInCommunity=async function(req,res,next){
    
    await community.save({ session: sess });
         await sess.commitTransaction();
-        res.status(200).send({community});
+        res.status(200).send(community);
 
   }
   catch (err) {
@@ -181,7 +182,7 @@ exports.addBlocksInCommunity=async function(req,res,next){
         return next(error);
       }
      
-    res.status(200).send({community});
+    res.status(200).send(community);
 
 }
 exports.getBlocksInCommunity=async function(req,res,next){
@@ -213,7 +214,7 @@ exports.getBlocksInCommunity=async function(req,res,next){
   }  
 
   res.json({communityid:communityid,blocks: communities.blockdetails.map(block =>
-    block.toObject({ getters: true })
+    block.toObject()
 )});
 
 }
@@ -236,108 +237,109 @@ exports.addFloorsInCommunity=async function(req,res,next){
         return next(error);
       }
      
-    res.status(200).send({community});
+    res.status(200).send(community);
 
 }
 
 
-exports.addApartmentModelInCommunity=async function(req,res,next){
-    var aptmodels = req.body; 
-    var communityid = req.params.id;
-    let  community;
-    try{
-        community=await Community.findById(communityid);
-        const sess = await mongoose.startSession();
-        sess.startTransaction();
+// exports.addApartmentModelInCommunity=async function(req,res,next){
+//     var aptmodels = req.body; 
+//     var communityid = req.params.id;
+//     let  community;
+//     try{
+//         community=await Community.findById(communityid);
+//         const sess = await mongoose.startSession();
+//         sess.startTransaction();
         
-        community.modeldetails.push(aptmodels);
-       // community.models=community.modeldetails.count
-        await community.save({ session: sess });
-        await sess.commitTransaction();
-    }
-    catch (err) {
-        console.log(err);
-        const error = new HttpError(
-          `Something went wrong, could not update a community- ${communityid}`,
-          500
-        );
-        return next(error);
-      }
+//         community.modeldetails.push(aptmodels);
+//        // community.models=community.modeldetails.count
+//         await community.save({ session: sess });
+//         await sess.commitTransaction();
+//     }
+//     catch (err) {
+//         console.log(err);
+//         const error = new HttpError(
+//           `Something went wrong, could not update a community- ${communityid}`,
+//           500
+//         );
+//         return next(error);
+//       }
      
-    res.status(200).send({community});
+//     res.status(200).send({community});
 
-}
-exports.getApartmentModelsInCommunitybyName=async function(req,res,next){
-    const communityid=req.body.communityid;
-    const modelName=req.body.modelname;
-    let modeltoReturn;
-    try{
-        communities=await Community.findOne({'_id':communityid}).populate('modeldetails');
-       // console.log(communities);
+// }
+// exports.getApartmentModelsInCommunitybyName=async function(req,res,next){
+//     const communityid=req.body.communityid;
+//     const modelName=req.body.modelname;
+//     let modeltoReturn;
+//     try{
+//         communities=await Community.findOne({'_id':communityid}).populate('modeldetails');
+//        // console.log(communities);
       
-       // count=await Community.find({'_id':communityid}).blockdetails.countDocuments();
-       count=0;
+//        // count=await Community.find({'_id':communityid}).blockdetails.countDocuments();
+//        count=0;
         
-    }
-    catch (err) {
-        const error = new HttpError(
-          `Something went wrong, could not fetch block details for  community- ${communityid}`,
-          500
-        );
-        return next(error);
-      }
+//     }
+//     catch (err) {
+//         const error = new HttpError(
+//           `Something went wrong, could not fetch block details for  community- ${communityid}`,
+//           500
+//         );
+//         return next(error);
+//       }
 
       
-  if (!communities ) {
-    const error = new HttpError(
-      ' could not fetch block details of  community for the provided id.',
-      404
-    );
-    return next(error);
-  }  
+//   if (!communities ) {
+//     const error = new HttpError(
+//       ' could not fetch block details of  community for the provided id.',
+//       404
+//     );
+//     return next(error);
+//   }  
 
-  communities.modeldetails.forEach(model =>
-     {
+//   communities.modeldetails.forEach(model =>
+//      {
 
-        if(model.name===modelName)
-        {
-            modeltoReturn=model;
-        }
-    });
-  res.json({communityid:communityid,model: modeltoReturn});
+//         if(model.name===modelName)
+//         {
+//             modeltoReturn=model;
+//         }
+//     });
+//   res.json({communityid:communityid,model: modeltoReturn});
 
-}
-exports.getApartmentModelsInCommunity=async function(req,res,next){
-    const communityid=req.params.id;
-    let count;
-    try{
-        communities=await Community.findOne({'_id':communityid}).populate('modeldetails');
-       // console.log(communities);
+// }
+// exports.getApartmentModelsInCommunity=async function(req,res,next){
+//     const communityid=req.params.id;
+//     let count;
+//     try{
+//         communities=await Community.findOne({'_id':communityid}).populate('modeldetails');
+//        // console.log(communities);
       
-       // count=await Community.find({'_id':communityid}).blockdetails.countDocuments();
-       count=0;
+//        // count=await Community.find({'_id':communityid}).blockdetails.countDocuments();
+//        count=0;
         
-    }
-    catch (err) {
-        const error = new HttpError(
-          `Something went wrong, could not fetch block details for  community- ${communityid}`,
-          500
-        );
-        return next(error);
-      }
+//     }
+//     catch (err) {
+//         const error = new HttpError(
+//           `Something went wrong, could not fetch block details for  community- ${communityid}`,
+//           500
+//         );
+//         return next(error);
+//       }
 
       
-  if (!communities ) {
-    const error = new HttpError(
-      ' could not fetch block details of  community for the provided id.',
-      404
-    );
-    return next(error);
-  }  
+//   if (!communities ) {
+//     const error = new HttpError(
+//       ' could not fetch block details of  community for the provided id.',
+//       404
+//     );
+//     return next(error);
+//   }  
 
-  res.json({communityid:communityid,models: communities.modeldetails.map(model =>
-    model.toObject({ getters: true })
-)});
+//   res.json({communityid:communityid,models: communities.modeldetails.map(model =>
+//     model.toObject({ getters: true })
+// )});
 
-}
+// }
+
 

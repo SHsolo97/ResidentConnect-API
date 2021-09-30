@@ -11,22 +11,7 @@ exports.gethealthStatus=async function(req, res,next) {
   const returnval="userInfo service running ...";
   res.status(200).send( returnval);
 }
-exports.getUsers = async function(req, res,next) {
-    let users,count;
-    try {
-        users = await User.find();
-        count = await User.find().countDocuments();
-    } catch (err) {
-      const error = new HttpError(
-        'Fetching users failed, please try again later.',
-        500
-      );
-      return next(error);
-    }
-  
 
-    res.json({count: count, users: users.map(user => user.toObject())});
-}
 exports.getSummary= async function(req, res,next) {
   let summary,count;
    

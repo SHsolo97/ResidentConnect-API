@@ -6,15 +6,13 @@
       "version": "1.0"
     },
     "produces": ["application/json"],
-    "host": "localhost:8000",
-    "basePath": "/api/swagger/v1",
+    "host": "https://residentsconnect-dev.srscloudapps.link",
     "paths": {
-      "/test1": {
+      "/api/community/health-status": {
         "get": {
-          "x-swagger-router-controller": "middleware-name1",
-          "operationId": "swagTest",
-          "tags": ["/test"],
-          "description": "",
+          "x-swagger-router-controller": "community",
+          "tags": ["Community"],
+          "description": "Check health status",
           "parameters": [],
           "responses": {}
         }
