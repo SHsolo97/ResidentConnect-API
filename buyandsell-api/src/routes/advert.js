@@ -4,7 +4,11 @@ const { check } = require('express-validator');
 
 var router = express.Router();
 var advert_Controller = require('../controllers/advertController');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
+router.use('/api/adverts/docs', swaggerUi.serve);
+router.get('/api/adverts/docs', swaggerUi.setup(swaggerDocument));
 
 router.get('/api/adverts/health-status',advert_Controller.gethealthStatus);
 router.get('/api/adverts/categories',advert_Controller.getCategories);

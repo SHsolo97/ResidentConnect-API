@@ -4,6 +4,11 @@ const { check } = require('express-validator');
 
 var router = express.Router();
 var classifieds_controller = require('../controllers/classifiedsController');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+router.use('/api/classifieds/docs', swaggerUi.serve);
+router.get('/api/classifieds/docs', swaggerUi.setup(swaggerDocument));
 
 router.get('/api/classifieds/categories',classifieds_controller.getCategories);
 router.post('/api/classifieds/subcategories',classifieds_controller.getSubCategories);

@@ -5,8 +5,8 @@ var apartments_Controller = require('../controllers/apartmentsController');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDocument));
+router.use('/api/community/docs', swaggerUi.serve);
+router.get('/api/community/docs', swaggerUi.setup(swaggerDocument));
 router.get('/api/community/apartments/getschema',apartments_Controller.getSwaggerSchema);
 
 router.get('/api/community/apartments/validatetoken/:token',apartments_Controller.valitateToken); //documented
