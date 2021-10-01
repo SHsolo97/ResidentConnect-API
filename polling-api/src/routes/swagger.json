@@ -1,0 +1,3771 @@
+
+ {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Residents-Connect - API",
+      "description": "API details of Residents Connect Application - Community",
+      "version": "1.0.0"
+    },
+    "produces": ["application/json"],
+    "host": "https://residentsconnect-dev.srscloudapps.link",
+    "paths": {
+      
+      "/api/pollings/health-status": {
+        "get": {
+          "tags": [
+            "Pollings"
+          ],
+          "description": "validate api is running",
+          "responses": {
+            "200": {
+              "description": "validate health status"
+            }
+          }
+        }
+      },
+      "/api/pollings/create": {
+        "post": {
+          "tags": [
+            "Pollings"
+          ],
+          "description": "create a  polling",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pollings_create_body"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Polling is created",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_201_7"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/pollings/search": {
+        "post": {
+          "tags": [
+            "Pollings"
+          ],
+          "description": "search a  pollings based on criteria",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pollings_search_body"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "List of pollings",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_200_9"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/pollings/{pid}": {
+        "put": {
+          "tags": [
+            "Pollings"
+          ],
+          "description": "edit poll request",
+          "parameters": [
+            {
+              "name": "pid",
+              "in": "path",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "title": "_id",
+                "type": "string",
+                "description": "A unique object id of poll"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pollings_pid_body"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Polling is updated",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_201_7"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "Pollings"
+          ],
+          "description": "delete  polling by id",
+          "parameters": [
+            {
+              "name": "pid",
+              "in": "path",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "title": "_id",
+                "type": "string",
+                "description": "A unique object id of poll"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "poll is deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/inline_response_200_2"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      
+    
+    },
+    "components": {
+      "schemas": {
+        "announcements_create_body": {
+          "required": [
+            "communityid",
+            "createdby",
+            "description",
+            "expiredat",
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "createdby": {
+              "type": "string"
+            },
+            "expiredat": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_201": {
+          "required": [
+            "_id",
+            "communityid",
+            "createdat",
+            "createdby",
+            "description",
+            "expiredat",
+            "title"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "createdby": {
+              "type": "string"
+            },
+            "createdat": {
+              "type": "string"
+            },
+            "expiredat": {
+              "type": "string"
+            }
+          }
+        },
+        "announcements_search_body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "createdby": {
+              "type": "string"
+            },
+            "createdat": {
+              "type": "string"
+            },
+            "expiredat": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200": {
+          "required": [
+            "announcements",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "announcements": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "createdby": {
+                    "type": "string"
+                  },
+                  "createdat": {
+                    "type": "string"
+                  },
+                  "expiredat": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "announcements_aid_body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "createdby": {
+              "type": "string"
+            },
+            "createdat": {
+              "type": "string"
+            },
+            "expiredat": {
+              "type": "string"
+            }
+          }
+        },
+        "apicarpoolingsridescreate_source": {
+          "required": [
+            "addressline",
+            "area",
+            "city",
+            "pincode",
+            "state"
+          ],
+          "type": "object",
+          "properties": {
+            "addressline": {
+              "type": "string"
+            },
+            "area": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "pincode": {
+              "type": "string"
+            }
+          }
+        },
+        "apicarpoolingsridescreate_seats": {
+          "required": [
+            "available",
+            "filled"
+          ],
+          "type": "object",
+          "properties": {
+            "available": {
+              "type": "number"
+            },
+            "filled": {
+              "type": "number"
+            }
+          }
+        },
+        "rides_create_body": {
+          "required": [
+            "airconditioned",
+            "amt",
+            "car",
+            "communityid",
+            "contact",
+            "creator",
+            "destination",
+            "ridedatetime",
+            "seats",
+            "source",
+            "status",
+            "stoppoints",
+            "thumbnail"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "car": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "airconditioned": {
+              "type": "boolean"
+            },
+            "ridedatetime": {
+              "type": "string"
+            },
+            "contact": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "source": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            },
+            "destination": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            },
+            "stoppoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "seats": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_seats"
+            }
+          }
+        },
+        "inline_response_201_1": {
+          "required": [
+            "_id",
+            "airconditioned",
+            "amt",
+            "car",
+            "communityid",
+            "contact",
+            "creator",
+            "destination",
+            "ridedatetime",
+            "seats",
+            "source",
+            "status",
+            "stoppoints",
+            "thumbnail"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "car": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "airconditioned": {
+              "type": "boolean"
+            },
+            "ridedatetime": {
+              "type": "string"
+            },
+            "contact": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "source": {
+              "required": [
+                "addressline",
+                "area",
+                "city",
+                "pincode",
+                "state"
+              ],
+              "type": "object",
+              "properties": {
+                "addressline": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "pincode": {
+                  "type": "string"
+                }
+              }
+            },
+            "destination": {
+              "required": [
+                "addressline",
+                "area",
+                "city",
+                "pincode",
+                "state"
+              ],
+              "type": "object",
+              "properties": {
+                "addressline": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "pincode": {
+                  "type": "string"
+                }
+              }
+            },
+            "stoppoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "seats": {
+              "required": [
+                "available",
+                "filled"
+              ],
+              "type": "object",
+              "properties": {
+                "available": {
+                  "type": "number"
+                },
+                "filled": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "rides_search_body": {
+          "required": [
+            "_id",
+            "airconditioned",
+            "amt",
+            "car",
+            "communityid",
+            "contact",
+            "creator",
+            "destination",
+            "ridedatetime",
+            "seats",
+            "source",
+            "status",
+            "stoppoints",
+            "thumbnail"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "car": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "airconditioned": {
+              "type": "boolean"
+            },
+            "ridedatetime": {
+              "type": "string"
+            },
+            "contact": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "source": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            },
+            "destination": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            },
+            "stoppoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "seats": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_seats"
+            }
+          }
+        },
+        "inline_response_200_1": {
+          "required": [
+            "announcements",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "announcements": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "car": {
+                    "type": "string"
+                  },
+                  "creator": {
+                    "type": "string"
+                  },
+                  "amt": {
+                    "type": "number"
+                  },
+                  "thumbnail": {
+                    "type": "string"
+                  },
+                  "airconditioned": {
+                    "type": "boolean"
+                  },
+                  "ridedatetime": {
+                    "type": "string"
+                  },
+                  "contact": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "required": [
+                      "addressline",
+                      "area",
+                      "city",
+                      "pincode",
+                      "state"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "addressline": {
+                        "type": "string"
+                      },
+                      "area": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "pincode": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "destination": {
+                    "required": [
+                      "addressline",
+                      "area",
+                      "city",
+                      "pincode",
+                      "state"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "addressline": {
+                        "type": "string"
+                      },
+                      "area": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "pincode": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "stoppoints": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "seats": {
+                    "required": [
+                      "available",
+                      "filled"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "available": {
+                        "type": "number"
+                      },
+                      "filled": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "rides_rideid_body": {
+          "type": "object",
+          "properties": {
+            "car": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "airconditioned": {
+              "type": "boolean"
+            },
+            "ridedatetime": {
+              "type": "string"
+            },
+            "contact": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "source": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            },
+            "destination": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            },
+            "stoppoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "seats": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_seats"
+            }
+          }
+        },
+        "inline_response_200_2": {
+          "required": [
+            "message"
+          ],
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "riderequests_create_body": {
+          "required": [
+            "owner",
+            "requestedby",
+            "ride",
+            "seats"
+          ],
+          "type": "object",
+          "properties": {
+            "ride": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "seats": {
+              "type": "string"
+            },
+            "requestedby": {
+              "type": "number"
+            }
+          }
+        },
+        "inline_response_201_2": {
+          "required": [
+            "_id",
+            "owner",
+            "requestedby",
+            "ride",
+            "seats",
+            "status"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "ride": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "seats": {
+              "type": "string"
+            },
+            "requestedby": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "riderequests_search_body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "ride": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "seats": {
+              "type": "string"
+            },
+            "requestedby": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_3": {
+          "required": [
+            "count",
+            "ridereqs"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "ridereqs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "ride": {
+                    "type": "string"
+                  },
+                  "owner": {
+                    "type": "string"
+                  },
+                  "seats": {
+                    "type": "string"
+                  },
+                  "requestedby": {
+                    "type": "number"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "riderequests_requestid_body": {
+          "type": "object",
+          "properties": {
+            "seats": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "rejectionreason": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_4": {
+          "required": [
+            "_id",
+            "owner",
+            "requestedby",
+            "ride",
+            "seats",
+            "status"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "ride": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            },
+            "seats": {
+              "type": "string"
+            },
+            "requestedby": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            },
+            "rejectionreason": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_5": {
+          "required": [
+            "categories",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "classifieds_subcategories_body": {
+          "required": [
+            "category"
+          ],
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_6": {
+          "required": [
+            "count",
+            "subcategories"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "subcategories": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "subcategory": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "apiclassifiedscreate_phone": {
+          "required": [
+            "hours",
+            "number",
+            "type"
+          ],
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "number": {
+              "type": "string"
+            },
+            "hours": {
+              "type": "string"
+            }
+          }
+        },
+        "classifieds_create_body": {
+          "required": [
+            "address",
+            "category",
+            "communityid",
+            "description",
+            "emails",
+            "name",
+            "phone",
+            "subcategory",
+            "thumbnail",
+            "website"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            },
+            "name": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "website": {
+              "type": "string"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiclassifiedscreate_phone"
+              }
+            },
+            "emails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "address": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            }
+          }
+        },
+        "inline_response_201_3": {
+          "required": [
+            "_id",
+            "address",
+            "category",
+            "communityid",
+            "description",
+            "emails",
+            "name",
+            "phone",
+            "ratings",
+            "subcategory",
+            "thumbnail",
+            "website"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            },
+            "name": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "website": {
+              "type": "string"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "ratings": {
+              "required": [
+                "_1star",
+                "_2star",
+                "_3star",
+                "_4star",
+                "_5star",
+                "_avgstar",
+                "_totrating"
+              ],
+              "type": "object",
+              "properties": {
+                "_5star": {
+                  "type": "number"
+                },
+                "_4star": {
+                  "type": "number"
+                },
+                "_3star": {
+                  "type": "number"
+                },
+                "_2star": {
+                  "type": "number"
+                },
+                "_1star": {
+                  "type": "number"
+                },
+                "_totrating": {
+                  "type": "number"
+                },
+                "_avgstar": {
+                  "type": "number"
+                }
+              }
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "hours",
+                  "number",
+                  "type"
+                ],
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  },
+                  "hours": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "emails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "address": {
+              "required": [
+                "addressline",
+                "area",
+                "city",
+                "pincode",
+                "state"
+              ],
+              "type": "object",
+              "properties": {
+                "addressline": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "pincode": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "classifieds_search_body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            },
+            "name": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "website": {
+              "type": "string"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiclassifiedscreate_phone"
+              }
+            },
+            "emails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "address": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            }
+          }
+        },
+        "inline_response_200_7": {
+          "required": [
+            "classifieds",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "classifieds": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "subcategory": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "number"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "website": {
+                    "type": "boolean"
+                  },
+                  "thumbnail": {
+                    "type": "string"
+                  },
+                  "ratings": {
+                    "required": [
+                      "_1star",
+                      "_2star",
+                      "_3star",
+                      "_4star",
+                      "_5star",
+                      "_avgstar",
+                      "_totrating"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "_5star": {
+                        "type": "number"
+                      },
+                      "_4star": {
+                        "type": "number"
+                      },
+                      "_3star": {
+                        "type": "number"
+                      },
+                      "_2star": {
+                        "type": "number"
+                      },
+                      "_1star": {
+                        "type": "number"
+                      },
+                      "_totrating": {
+                        "type": "number"
+                      },
+                      "_avgstar": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "phone": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "hours",
+                        "number",
+                        "type"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "number": {
+                          "type": "string"
+                        },
+                        "hours": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "emails": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "address": {
+                    "required": [
+                      "addressline",
+                      "area",
+                      "city",
+                      "pincode",
+                      "state"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "addressline": {
+                        "type": "string"
+                      },
+                      "area": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "pincode": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "apiclassifiedscid_ratings": {
+          "required": [
+            "_1star",
+            "_2star",
+            "_3star",
+            "_4star",
+            "_5star",
+            "_avgstar",
+            "_totrating"
+          ],
+          "type": "object",
+          "properties": {
+            "_5star": {
+              "type": "number"
+            },
+            "_4star": {
+              "type": "number"
+            },
+            "_3star": {
+              "type": "number"
+            },
+            "_2star": {
+              "type": "number"
+            },
+            "_1star": {
+              "type": "number"
+            },
+            "_totrating": {
+              "type": "number"
+            },
+            "_avgstar": {
+              "type": "number"
+            }
+          }
+        },
+        "classifieds_cid_body": {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            },
+            "name": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "website": {
+              "type": "string"
+            },
+            "thumbnail": {
+              "type": "string"
+            },
+            "ratings": {
+              "$ref": "#/components/schemas/apiclassifiedscid_ratings"
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiclassifiedscreate_phone"
+              }
+            },
+            "emails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "address": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            }
+          }
+        },
+        "comment_create_body": {
+          "required": [
+            "classifiedid",
+            "comment",
+            "givenby",
+            "rating"
+          ],
+          "type": "object",
+          "properties": {
+            "classifiedid": {
+              "type": "string"
+            },
+            "givenby": {
+              "type": "string"
+            },
+            "rating": {
+              "type": "number"
+            },
+            "comment": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_201_4": {
+          "required": [
+            "_id",
+            "classifiedid",
+            "comment",
+            "createdat",
+            "givenby",
+            "rating"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "classifiedid": {
+              "type": "string"
+            },
+            "givenby": {
+              "type": "string"
+            },
+            "rating": {
+              "type": "number"
+            },
+            "comment": {
+              "type": "string"
+            },
+            "createdat": {
+              "type": "string"
+            }
+          }
+        },
+        "comment_search_body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "classifiedid": {
+              "type": "string"
+            },
+            "givenby": {
+              "type": "string"
+            },
+            "rating": {
+              "type": "number"
+            },
+            "comment": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_8": {
+          "required": [
+            "comments",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "comments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "classifiedid": {
+                    "type": "string"
+                  },
+                  "givenby": {
+                    "type": "string"
+                  },
+                  "rating": {
+                    "type": "number"
+                  },
+                  "comment": {
+                    "type": "string"
+                  },
+                  "createdat": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "comments_commentid_body": {
+          "type": "object",
+          "properties": {
+            "rating": {
+              "type": "number"
+            },
+            "comment": {
+              "type": "string"
+            }
+          }
+        },
+        "categories_create_body": {
+          "required": [
+            "category"
+          ],
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_201_5": {
+          "required": [
+            "_id",
+            "category"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "subcategories_create_body": {
+          "required": [
+            "category",
+            "subcategory"
+          ],
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_201_6": {
+          "required": [
+            "_id",
+            "category",
+            "subcategory"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            }
+          }
+        },
+        "apipollingscreate_options": {
+          "required": [
+            "description",
+            "votes"
+          ],
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "votes": {
+              "type": "number"
+            }
+          }
+        },
+        "pollings_create_body": {
+          "required": [
+            "answeredby",
+            "communityid",
+            "createdby",
+            "expiredat",
+            "options",
+            "question",
+            "totalvotes"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "createdby": {
+              "type": "string"
+            },
+            "question": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apipollingscreate_options"
+              }
+            },
+            "expiredat": {
+              "type": "string"
+            },
+            "answeredby": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "totalvotes": {
+              "type": "number"
+            }
+          }
+        },
+        "inline_response_201_7": {
+          "required": [
+            "_id",
+            "answeredby",
+            "communityid",
+            "createdby",
+            "expiredat",
+            "options",
+            "question",
+            "totalvotes"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "createdby": {
+              "type": "string"
+            },
+            "question": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "description",
+                  "votes"
+                ],
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "votes": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "expiredat": {
+              "type": "string"
+            },
+            "answeredby": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "totalvotes": {
+              "type": "number"
+            }
+          }
+        },
+        "pollings_search_body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "createdby": {
+              "type": "string"
+            },
+            "expiredat": {
+              "type": "string"
+            },
+            "answeredby": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "totalvotes": {
+              "type": "number"
+            }
+          }
+        },
+        "inline_response_200_9": {
+          "required": [
+            "count",
+            "polls"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "polls": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "createdby": {
+                    "type": "string"
+                  },
+                  "question": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "description",
+                        "votes"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "votes": {
+                          "type": "number"
+                        }
+                      }
+                    }
+                  },
+                  "expiredat": {
+                    "type": "string"
+                  },
+                  "answeredby": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "totalvotes": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "pollings_pid_body": {
+          "type": "object",
+          "properties": {
+            "question": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apipollingscreate_options"
+              }
+            },
+            "expiredat": {
+              "type": "string"
+            },
+            "answeredby": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "totalvotes": {
+              "type": "number"
+            }
+          }
+        },
+        "apiuserscreate_phone": {
+          "required": [
+            "number",
+            "type"
+          ],
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "number": {
+              "type": "string"
+            }
+          }
+        },
+        "apiuserscreate_emergencycontacts": {
+          "required": [
+            "name",
+            "phone",
+            "relationship"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "relationship": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            }
+          }
+        },
+        "apiuserscreate_apartments": {
+          "required": [
+            "apartmentid",
+            "communityid"
+          ],
+          "type": "object",
+          "properties": {
+            "apartmentid": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            }
+          }
+        },
+        "users_create_body": {
+          "required": [
+            "email",
+            "profilecompletion",
+            "type"
+          ],
+          "type": "object",
+          "properties": {
+            "uid": {
+              "type": "string"
+            },
+            "profilecompletion": {
+              "type": "boolean"
+            },
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "bloodgroup": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiuserscreate_phone"
+              }
+            },
+            "emergencycontacts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiuserscreate_emergencycontacts"
+              }
+            },
+            "communities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "apartments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiuserscreate_apartments"
+              }
+            }
+          }
+        },
+        "inline_response_201_8": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "profilecompletion": {
+              "type": "boolean"
+            },
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "bloodgroup": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "number",
+                  "type"
+                ],
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "number": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "emergencycontacts": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "name",
+                  "phone",
+                  "relationship"
+                ],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "relationship": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "communities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "apartments": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "apartmentid",
+                  "communityid"
+                ],
+                "type": "object",
+                "properties": {
+                  "apartmentid": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "users_search_body": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "uid": {
+              "type": "string"
+            },
+            "profilecompletion": {
+              "type": "boolean"
+            },
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "bloodgroup": {
+              "type": "string"
+            },
+            "communities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "apartments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiuserscreate_apartments"
+              }
+            }
+          }
+        },
+        "inline_response_200_10": {
+          "required": [
+            "count",
+            "users"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer"
+            },
+            "users": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "uid": {
+                    "type": "string"
+                  },
+                  "profilecompletion": {
+                    "type": "boolean"
+                  },
+                  "firstname": {
+                    "type": "string"
+                  },
+                  "lastname": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string"
+                  },
+                  "bloodgroup": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "number",
+                        "type"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "number": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "emergencycontacts": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "name",
+                        "phone",
+                        "relationship"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "relationship": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "communities": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "apartments": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "apartmentid",
+                        "communityid"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "apartmentid": {
+                          "type": "string"
+                        },
+                        "communityid": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "users_id_body": {
+          "type": "object",
+          "properties": {
+            "uid": {
+              "type": "string"
+            },
+            "profilecompletion": {
+              "type": "boolean"
+            },
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "bloodgroup": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiuserscreate_phone"
+              }
+            },
+            "emergencycontacts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiuserscreate_emergencycontacts"
+              }
+            },
+            "communities": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "apartments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/apiuserscreate_apartments"
+              }
+            }
+          }
+        },
+        "apartment_add_body": {
+          "required": [
+            "apartmentid",
+            "communityid"
+          ],
+          "type": "object",
+          "properties": {
+            "apartmentid": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            }
+          }
+        },
+        "apartment_remove_body": {
+          "required": [
+            "apartmentid"
+          ],
+          "type": "object",
+          "properties": {
+            "apartmentid": {
+              "type": "string"
+            }
+          }
+        },
+        "users_summary_body": {
+          "required": [
+            "communities"
+          ],
+          "type": "object",
+          "properties": {
+            "communities": {
+              "type": "string"
+            }
+          }
+        },
+        "apiuserssummary__id": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_11": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "$ref": "#/components/schemas/apiuserssummary__id"
+            },
+            "total": {
+              "type": "number"
+            }
+          }
+        },
+        "payments_create_body": {
+          "required": [
+            "amt",
+            "apartmentid",
+            "aptnum",
+            "category",
+            "communityid",
+            "communityname",
+            "dueat",
+            "period"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "communityname": {
+              "type": "string"
+            },
+            "apartmentid": {
+              "type": "string"
+            },
+            "aptnum": {
+              "type": "string"
+            },
+            "period": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "dueat": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            }
+          }
+        },
+        "inline_response_201_9": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "communityname": {
+              "type": "string"
+            },
+            "apartmentid": {
+              "type": "string"
+            },
+            "aptnum": {
+              "type": "string"
+            },
+            "period": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "createdat": {
+              "type": "string"
+            },
+            "dueat": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "payments_search_body": {
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "apartmentid": {
+              "type": "string"
+            },
+            "period": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "dueat": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_12": {
+          "required": [
+            "count",
+            "payments"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "payments": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "communityname": {
+                    "type": "string"
+                  },
+                  "apartmentid": {
+                    "type": "string"
+                  },
+                  "aptnum": {
+                    "type": "string"
+                  },
+                  "period": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "createdat": {
+                    "type": "string"
+                  },
+                  "dueat": {
+                    "type": "string"
+                  },
+                  "amt": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "paidon": {
+                    "type": "string"
+                  },
+                  "paymentdetails": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "cardnumber": {
+                        "type": "string"
+                      },
+                      "accountnumber": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "inline_response_200_13": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "communityname": {
+              "type": "string"
+            },
+            "apartmentid": {
+              "type": "string"
+            },
+            "aptnum": {
+              "type": "string"
+            },
+            "period": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "createdat": {
+              "type": "string"
+            },
+            "dueat": {
+              "type": "string"
+            },
+            "amt": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            },
+            "paidon": {
+              "type": "string"
+            },
+            "paymentdetails": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "cardnumber": {
+                  "type": "string"
+                },
+                "accountnumber": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "apipaymentspid_paymentdetails": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string"
+            },
+            "cardnumber": {
+              "type": "string"
+            },
+            "accountnumber": {
+              "type": "string"
+            }
+          }
+        },
+        "payments_pid_body": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "paidon": {
+              "type": "string"
+            },
+            "paymentdetails": {
+              "$ref": "#/components/schemas/apipaymentspid_paymentdetails"
+            }
+          }
+        },
+        "payments_paymenthistory_body": {
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "apartmentid": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "sendMail_body": {
+          "required": [
+            "body",
+            "recipient",
+            "subject"
+          ],
+          "type": "object",
+          "properties": {
+            "subject": {
+              "type": "string"
+            },
+            "body": {
+              "type": "string"
+            },
+            "recipient": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_201_10": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "body": {
+              "type": "string"
+            },
+            "sendAt": {
+              "type": "string"
+            },
+            "recipient": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "adverts_subcategories_body": {
+          "required": [
+            "category"
+          ],
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "categories_create_body_1": {
+          "required": [
+            "category"
+          ],
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            }
+          }
+        },
+        "subcategories_create_body_1": {
+          "required": [
+            "category",
+            "subcategory"
+          ],
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            }
+          }
+        },
+        "apiadvertscreate_price": {
+          "required": [
+            "negotiable",
+            "value"
+          ],
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "negotiable": {
+              "type": "boolean"
+            }
+          }
+        },
+        "adverts_create_body": {
+          "required": [
+            "category",
+            "communityid",
+            "creator",
+            "description",
+            "images",
+            "price",
+            "subcategory",
+            "title",
+            "type"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "price": {
+              "$ref": "#/components/schemas/apiadvertscreate_price"
+            }
+          }
+        },
+        "inline_response_201_11": {
+          "required": [
+            "_id",
+            "activatedat",
+            "category",
+            "communityid",
+            "createdat",
+            "creator",
+            "description",
+            "images",
+            "price",
+            "status",
+            "subcategory",
+            "title",
+            "type"
+          ],
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "createdat": {
+              "type": "string"
+            },
+            "activatedat": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "price": {
+              "required": [
+                "negotiable",
+                "value"
+              ],
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "number"
+                },
+                "negotiable": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "adverts_search_body": {
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "subcategory": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_14": {
+          "required": [
+            "adverts",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "adverts": {
+              "type": "array",
+              "items": {
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "category": {
+                    "type": "string"
+                  },
+                  "subcategory": {
+                    "type": "string"
+                  },
+                  "creator": {
+                    "type": "string"
+                  },
+                  "createdat": {
+                    "type": "string"
+                  },
+                  "activatedat": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "price": {
+                    "required": [
+                      "negotiable",
+                      "value"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number"
+                      },
+                      "negotiable": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "community_create_body": {
+          "required": [
+            "builder",
+            "name"
+          ],
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "builder": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_201_12": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "builder": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            },
+            "profilecompletion": {
+              "type": "boolean"
+            },
+            "createdat": {
+              "type": "string"
+            },
+            "address": {
+              "required": [
+                "addressline",
+                "area",
+                "city",
+                "pincode",
+                "state"
+              ],
+              "type": "object",
+              "properties": {
+                "addressline": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "pincode": {
+                  "type": "string"
+                }
+              }
+            },
+            "blockdetails": {
+              "type": "array",
+              "items": {
+                "required": [
+                  "block",
+                  "flats",
+                  "floor",
+                  "floordetails"
+                ],
+                "type": "object",
+                "properties": {
+                  "block": {
+                    "type": "string"
+                  },
+                  "floor": {
+                    "type": "number"
+                  },
+                  "flats": {
+                    "type": "number"
+                  },
+                  "floordetails": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "floor": {
+                          "type": "number"
+                        },
+                        "flats": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "paidservices": {
+              "required": [
+                "carpooling",
+                "facility",
+                "maintenance",
+                "polling",
+                "visitor"
+              ],
+              "type": "object",
+              "properties": {
+                "carpooling": {
+                  "type": "boolean"
+                },
+                "facility": {
+                  "type": "boolean"
+                },
+                "maintenance": {
+                  "type": "boolean"
+                },
+                "polling": {
+                  "type": "boolean"
+                },
+                "visitor": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "geo": {
+              "required": [
+                "lat",
+                "lng"
+              ],
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "lng": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "inline_response_200_15": {
+          "required": [
+            "communities",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "communities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "builder": {
+                    "type": "string"
+                  },
+                  "token": {
+                    "type": "string"
+                  },
+                  "profilecompletion": {
+                    "type": "boolean"
+                  },
+                  "createdat": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "required": [
+                      "addressline",
+                      "area",
+                      "city",
+                      "pincode",
+                      "state"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "addressline": {
+                        "type": "string"
+                      },
+                      "area": {
+                        "type": "string"
+                      },
+                      "city": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "pincode": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "blockdetails": {
+                    "type": "array",
+                    "items": {
+                      "required": [
+                        "block",
+                        "flats",
+                        "floor",
+                        "floordetails"
+                      ],
+                      "type": "object",
+                      "properties": {
+                        "block": {
+                          "type": "string"
+                        },
+                        "floor": {
+                          "type": "number"
+                        },
+                        "flats": {
+                          "type": "number"
+                        },
+                        "floordetails": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "floor": {
+                                "type": "number"
+                              },
+                              "flats": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "paidservices": {
+                    "required": [
+                      "carpooling",
+                      "facility",
+                      "maintenance",
+                      "polling",
+                      "visitor"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "carpooling": {
+                        "type": "boolean"
+                      },
+                      "facility": {
+                        "type": "boolean"
+                      },
+                      "maintenance": {
+                        "type": "boolean"
+                      },
+                      "polling": {
+                        "type": "boolean"
+                      },
+                      "visitor": {
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  "geo": {
+                    "required": [
+                      "lat",
+                      "lng"
+                    ],
+                    "type": "object",
+                    "properties": {
+                      "lat": {
+                        "type": "number"
+                      },
+                      "lng": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "apicommunityid_paidservices": {
+          "required": [
+            "carpooling",
+            "facility",
+            "maintenance",
+            "polling",
+            "visitor"
+          ],
+          "type": "object",
+          "properties": {
+            "carpooling": {
+              "type": "boolean"
+            },
+            "facility": {
+              "type": "boolean"
+            },
+            "maintenance": {
+              "type": "boolean"
+            },
+            "polling": {
+              "type": "boolean"
+            },
+            "visitor": {
+              "type": "boolean"
+            }
+          }
+        },
+        "apicommunityid_geo": {
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "type": "object",
+          "properties": {
+            "lat": {
+              "type": "number"
+            },
+            "lng": {
+              "type": "number"
+            }
+          }
+        },
+        "community_id_body": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "builder": {
+              "type": "string"
+            },
+            "profilecompletion": {
+              "type": "boolean"
+            },
+            "address": {
+              "$ref": "#/components/schemas/apicarpoolingsridescreate_source"
+            },
+            "paidservices": {
+              "$ref": "#/components/schemas/apicommunityid_paidservices"
+            },
+            "geo": {
+              "$ref": "#/components/schemas/apicommunityid_geo"
+            }
+          }
+        },
+        "blocks_edit_body": {
+          "type": "object",
+          "properties": {
+            "block": {
+              "type": "string"
+            },
+            "floors": {
+              "type": "number"
+            },
+            "falts": {
+              "type": "number"
+            }
+          }
+        },
+        "apicommunityapartmentsmodelscreate_area": {
+          "required": [
+            "builduparea",
+            "carpetarea",
+            "superbuilduparea"
+          ],
+          "type": "object",
+          "properties": {
+            "carpetarea": {
+              "type": "number"
+            },
+            "builduparea": {
+              "type": "number"
+            },
+            "superbuilduparea": {
+              "type": "number"
+            }
+          }
+        },
+        "apicommunityapartmentsmodelscreate_rooms": {
+          "required": [
+            "balconies",
+            "bathrooms",
+            "bedrooms",
+            "halls",
+            "kitchens",
+            "otherrooms"
+          ],
+          "type": "object",
+          "properties": {
+            "bedrooms": {
+              "type": "number"
+            },
+            "bathrooms": {
+              "type": "number"
+            },
+            "balconies": {
+              "type": "number"
+            },
+            "kitchens": {
+              "type": "number"
+            },
+            "halls": {
+              "type": "number"
+            },
+            "otherrooms": {
+              "type": "number"
+            }
+          }
+        },
+        "models_create_body": {
+          "required": [
+            "area",
+            "communityid",
+            "name",
+            "rooms"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "area": {
+              "$ref": "#/components/schemas/apicommunityapartmentsmodelscreate_area"
+            },
+            "rooms": {
+              "$ref": "#/components/schemas/apicommunityapartmentsmodelscreate_rooms"
+            }
+          }
+        },
+        "inline_response_201_13": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "area": {
+              "type": "object",
+              "properties": {
+                "carpetarea": {
+                  "type": "number"
+                },
+                "builduparea": {
+                  "type": "number"
+                },
+                "superbuilduparea": {
+                  "type": "number"
+                }
+              }
+            },
+            "rooms": {
+              "type": "object",
+              "properties": {
+                "bedrooms": {
+                  "type": "number"
+                },
+                "bathrooms": {
+                  "type": "number"
+                },
+                "balconies": {
+                  "type": "number"
+                },
+                "kitchens": {
+                  "type": "number"
+                },
+                "halls": {
+                  "type": "number"
+                },
+                "otherrooms": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "inline_response_200_16": {
+          "required": [
+            "count",
+            "models"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "models": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "area": {
+                    "type": "object",
+                    "properties": {
+                      "carpetarea": {
+                        "type": "number"
+                      },
+                      "builduparea": {
+                        "type": "number"
+                      },
+                      "superbuilduparea": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "rooms": {
+                    "type": "object",
+                    "properties": {
+                      "bedrooms": {
+                        "type": "number"
+                      },
+                      "bathrooms": {
+                        "type": "number"
+                      },
+                      "balconies": {
+                        "type": "number"
+                      },
+                      "kitchens": {
+                        "type": "number"
+                      },
+                      "halls": {
+                        "type": "number"
+                      },
+                      "otherrooms": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "models_modelid_body": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "area": {
+              "$ref": "#/components/schemas/apicommunityapartmentsmodelscreate_area"
+            },
+            "rooms": {
+              "$ref": "#/components/schemas/apicommunityapartmentsmodelscreate_rooms"
+            }
+          }
+        },
+        "apartment_create_body": {
+          "required": [
+            "aptnum",
+            "block",
+            "communityid",
+            "floor",
+            "issold",
+            "model",
+            "status"
+          ],
+          "type": "object",
+          "properties": {
+            "communityid": {
+              "type": "string"
+            },
+            "aptnum": {
+              "type": "string"
+            },
+            "block": {
+              "type": "string"
+            },
+            "floor": {
+              "type": "string"
+            },
+            "model": {
+              "$ref": "#/components/schemas/models_modelid_body"
+            },
+            "issold": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_201_14": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string"
+            },
+            "communityid": {
+              "type": "string"
+            },
+            "aptnum": {
+              "type": "string"
+            },
+            "block": {
+              "type": "string"
+            },
+            "floor": {
+              "type": "string"
+            },
+            "model": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "area": {
+                  "required": [
+                    "builduparea",
+                    "carpetarea",
+                    "superbuilduparea"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "carpetarea": {
+                      "type": "number"
+                    },
+                    "builduparea": {
+                      "type": "number"
+                    },
+                    "superbuilduparea": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "rooms": {
+                  "required": [
+                    "balconies",
+                    "bathrooms",
+                    "bedrooms",
+                    "halls",
+                    "kitchens",
+                    "otherrooms"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "bedrooms": {
+                      "type": "number"
+                    },
+                    "bathrooms": {
+                      "type": "number"
+                    },
+                    "balconies": {
+                      "type": "number"
+                    },
+                    "kitchens": {
+                      "type": "number"
+                    },
+                    "halls": {
+                      "type": "number"
+                    },
+                    "otherrooms": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "issold": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_17": {
+          "required": [
+            "apartments",
+            "count"
+          ],
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "apartments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string"
+                  },
+                  "communityid": {
+                    "type": "string"
+                  },
+                  "aptnum": {
+                    "type": "string"
+                  },
+                  "block": {
+                    "type": "string"
+                  },
+                  "floor": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "area": {
+                        "required": [
+                          "builduparea",
+                          "carpetarea",
+                          "superbuilduparea"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "carpetarea": {
+                            "type": "number"
+                          },
+                          "builduparea": {
+                            "type": "number"
+                          },
+                          "superbuilduparea": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "rooms": {
+                        "required": [
+                          "balconies",
+                          "bathrooms",
+                          "bedrooms",
+                          "halls",
+                          "kitchens",
+                          "otherrooms"
+                        ],
+                        "type": "object",
+                        "properties": {
+                          "bedrooms": {
+                            "type": "number"
+                          },
+                          "bathrooms": {
+                            "type": "number"
+                          },
+                          "balconies": {
+                            "type": "number"
+                          },
+                          "kitchens": {
+                            "type": "number"
+                          },
+                          "halls": {
+                            "type": "number"
+                          },
+                          "otherrooms": {
+                            "type": "number"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "issold": {
+                    "type": "boolean"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "apartments_apartmentid_body": {
+          "type": "object",
+          "properties": {
+            "issold": {
+              "type": "boolean"
+            },
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "apartments_summary_body": {
+          "required": [
+            "communities"
+          ],
+          "type": "object",
+          "properties": {
+            "communities": {
+              "type": "string"
+            }
+          }
+        },
+        "apicommunityapartmentssummary__id": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            }
+          }
+        },
+        "inline_response_200_18": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "$ref": "#/components/schemas/apicommunityapartmentssummary__id"
+            },
+            "total": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+  }

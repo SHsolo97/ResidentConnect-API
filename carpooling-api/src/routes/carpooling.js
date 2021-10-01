@@ -4,6 +4,12 @@ const { check } = require('express-validator');
 
 var router = express.Router();
 var carpooling_Controller = require('../controllers/carpoolingController');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+router.use('/api/carpoolings/docs', swaggerUi.serve);
+router.get('/api/carpoolings/docs', swaggerUi.setup(swaggerDocument));
+
 router.get('/api/carpoolings/health-status',carpooling_Controller.gethealthStatus);
 
 router.post('/api/carpoolings/rides/create',carpooling_Controller.createRide); 
