@@ -8,11 +8,13 @@ var advertSchema = new Schema({
     creator:{type: Schema.Types.ObjectId, ref: 'User',required: true},
     createdat: { type: Date, default: Date.now() , required: true},
     activatedat: { type: Date, default: Date.now() , required: true},
+    expiredat:{type:Date},
     title: {type:String, required:true},
     description: {type:String, required:true},
     category: {type:String, required:true},
     subcategory: {type:String, required:true},
-    status:{type:String, required:true,default:'Active'},
+    status:{type:String, required:true ,enum:  ['active','inactive'],
+    default: 'active'},
     type: {
         type: String,
         enum:  ['private','business'],
@@ -24,6 +26,8 @@ var advertSchema = new Schema({
         value:{type:Number},        
         negotiable:{type:Boolean}
     }
+
+  
 
 })
 advertSchema

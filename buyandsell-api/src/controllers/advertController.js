@@ -87,13 +87,29 @@ exports.deleteAdById= async function(req, res,next) {
 
 exports.getAds= async function(req, res,next) {
   let ads,count;
-   
+   console.log(req.body);
+   let query={};
+   if(req.body.hasOwnProperty('title'))
+    {
+      for(var field in req.body)
+      {
+        if(field==='title')
+         query[field]=new RegExp(req.body[field], 'i')
+        else
+            query[field]=req.body[field];
+      }
+    }
+    else
+     query=req.body;
+
+
   try {
-      ads = await Advert.find(req.body);
+      ads = await Advert.find(query);
       count = await Advert.find(req.body).countDocuments();
   } catch (err) {
+    console.log(err);
     const error = new HttpError(
-      `Fetching users failed,  please try again later.`,
+      `Fetching adverts failed,  please try again later.`,
       500
     );
     return next(error);
