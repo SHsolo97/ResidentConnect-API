@@ -37,7 +37,7 @@ var rideSchema = new Schema({
     contact:{type:String, required:true},
     status: {type:String, required:true, enum:  ['active', 'closed','cancelled'], default: 'active'},
 
-})
+}, { timestamps: { createdAt: 'createdat',updatedAt:'updatedat' } })
 
 // Compile model from schema
 module.exports =mongoose.model('ride', rideSchema );

@@ -7,6 +7,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     uid:{type:String},
     profilecompletion:{type:Boolean,required:true,default:false},
+    createdat:{type:Date},
+    lastlogin:{type:Date},
     firstname: { type: String },
     lastname: { type: String},
     type: {type:String, required:true, enum:  ['admin', 'technician','resident', 'moderator'], default: 'resident'},
