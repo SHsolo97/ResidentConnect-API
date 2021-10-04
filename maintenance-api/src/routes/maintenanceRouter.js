@@ -8,7 +8,7 @@ var maintenance_Controller = require('../controllers/maintenanceController');
 router.get('/api/maintenancerequests/health-status',maintenance_Controller.gethealthStatus);
 
 
-router.post('/api/maintenancerequests',maintenance_Controller.getMaintenanceReqs);
+router.post('/api/maintenancerequests/search',maintenance_Controller.getMaintenanceReqs);
 router.post('/api/maintenanceRequests/create',maintenance_Controller.createMaintenanceReq);
 
 router.get('/api/maintenanceRequests/:mid',maintenance_Controller.getMaintenanceReqById);

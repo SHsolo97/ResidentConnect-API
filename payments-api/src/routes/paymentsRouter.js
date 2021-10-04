@@ -18,5 +18,6 @@ router.post('/api/payments/paymenthistory',payments_Controller.getPaymentHistory
 router.get('/api/payments/:pid',payments_Controller.getPaymentInfoById);
 router.put('/api/payments/:pid',payments_Controller.editPaymentInfo);
 router.delete('/api/payments/:pid',payments_Controller.deletePaymentInfo);
+router.get('/api/payments/paymentsByMonth',payments_Controller.getPaymentsByMonth);
 
 module.exports = router;

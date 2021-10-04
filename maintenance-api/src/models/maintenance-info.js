@@ -7,8 +7,8 @@ var Schema = mongoose.Schema;
 var maintenanceinfoSchema = new Schema({
     communityid : {type: String},
     apartmentid : {type:String},
-    category:{type:String},
-  
+    category:{type:String,required:true ,enum:  ['community','apartment']},
+    type:{type:String},
     description:{type:String},
     status:{
         type:String
@@ -16,8 +16,8 @@ var maintenanceinfoSchema = new Schema({
     createdat:{type:Date},
     closedat:{type:Date},
     assignedto:{type:String},
-    servicecharge:{type:Decimal128},
-    materialcharge:{type:Decimal128}
+    servicecharge:{type:Number},
+    materialcharge:{type:Number}
  
     
 });
