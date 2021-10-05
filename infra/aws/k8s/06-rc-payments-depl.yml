@@ -24,7 +24,7 @@ spec:
             - containerPort: 4012
           env:
             - name: NOTIFICATION_URI
-              value: 'https://zl4i20n7s8.execute-api.ap-south-1.amazonaws.com/dev'
+              value: 'https://lno21bmek3.execute-api.ap-south-1.amazonaws.com/dev'
             - name: MONGO_URI
               value: 'mongodb+srv://admin:admin@residentsconnect-cluste.r0t44.mongodb.net/paymentsinfo?retryWrites=true&w=majority'
 ---
