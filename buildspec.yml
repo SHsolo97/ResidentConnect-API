@@ -10,14 +10,7 @@ phases:
         # Update Image tag in our Kubernetes Deployment Manifest        
         - echo "Update Image tags in k8s..."
         - sed -i 's@CONTAINER_IMAGE_ANNOUNCEMENTS@'"$REPOSITORY_ANNOUNCEMENTS_URI:$TAG"'@' infra/aws/k8s/00-rc-announcements-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_APARTMENTS@'"$REPOSITORY_APARTMENTS_URI:$TAG"'@' infra/aws/k8s/01-rc-apartments-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_ADVERTS@'"$REPOSITORY_ADVERTS_URI:$TAG"'@' infra/aws/k8s/02-rc-buyandsell-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_CARPOOL@'"$REPOSITORY_CARPOOL_URI:$TAG"'@' infra/aws/k8s/03-rc-carpooling-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_CLASSIFIEDS@'"$REPOSITORY_CLASSIFIEDS_URI:$TAG"'@' infra/aws/k8s/04-rc-classifieds-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_CONTACTS@'"$REPOSITORY_CONTACTS_URI:$TAG"'@' infra/aws/k8s/05-rc-contactsinfo-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_PAYMENTS@'"$REPOSITORY_PAYMENTS_URI:$TAG"'@' infra/aws/k8s/06-rc-payments-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_POLLING@'"$REPOSITORY_POLLING_URI:$TAG"'@' infra/aws/k8s/07-rc-polling-depl.yml
-        - sed -i 's@CONTAINER_IMAGE_USERS@'"$REPOSITORY_USERS_URI:$TAG"'@' infra/aws/k8s/08-rc-users-depl.yml
+    
 
         # Verify AWS CLI Version        
         - echo "Verify AWS CLI Version..."
@@ -33,7 +26,7 @@ phases:
       # Build Docker Image
       - echo "Build started on `date`"
       - echo "Building the Docker images..."
-      - docker build --file announcements-api/Dockerfile --tag agni1984/rc-announcementsinfo:latest.
+      - docker build --file announcements-api/Dockerfile --tag agni1984/rc-announcementsinfo:latest .
      
      
 
