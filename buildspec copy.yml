@@ -22,10 +22,9 @@ phases:
         # Verify AWS CLI Version        
         - echo "Verify AWS CLI Version..."
         - aws --version
-        # # Login to ECR Registry for docker to push the image to ECR Repository
-        # - echo "Login in to Amazon ECR..."
-        # - $(aws ecr get-login --no-include-email)
-        
+        # Login to ECR Registry for docker to push the image to ECR Repository
+        - echo "Login in to Amazon ECR..."
+        - $(aws ecr get-login --no-include-email)
         # Update Kube config Home Directory
         - export KUBECONFIG=$HOME/.kube/config
   build:
@@ -33,9 +32,15 @@ phases:
       # Build Docker Image
       - echo "Build started on `date`"
       - echo "Building the Docker images..."
-      - docker build --file announcements-api/Dockerfile --tag agni1984/rc-announcementsinfo:latest.
-     
-     
+      - docker build --file announcements-api/Dockerfile --tag $REPOSITORY_ANNOUNCEMENTS_URI:$TAG .
+      - docker build --file apartments-api/Dockerfile --tag $REPOSITORY_APARTMENTS_URI:$TAG .
+      - docker build --file buyandsell-api/Dockerfile --tag $REPOSITORY_ADVERTS_URI:$TAG .
+      - docker build --file carpooling-api/Dockerfile --tag $REPOSITORY_CARPOOL_URI:$TAG .
+      - docker build --file classifieds-api/Dockerfile --tag $REPOSITORY_CLASSIFIEDS_URI:$TAG .
+      - docker build --file contactinfo-api/Dockerfile --tag $REPOSITORY_CONTACTS_URI:$TAG .
+      - docker build --file payments-api/Dockerfile --tag $REPOSITORY_PAYMENTS_URI:$TAG .
+      - docker build --file polling-api/Dockerfile --tag $REPOSITORY_POLLING_URI:$TAG .
+      - docker build --file userinfo-api/Dockerfile --tag $REPOSITORY_USERS_URI:$TAG .
 
   post_build:
     commands:
@@ -43,9 +48,32 @@ phases:
       - echo "Build completed on `date`"
       - echo "Pushing the Docker images to ECR Repository"
 
-      - docker push  agni1984/rc-announcementsinfo:latest.
+      - docker push  $REPOSITORY_ANNOUNCEMENTS_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_ANNOUNCEMENTS_URI:$TAG"    
 
-     
+      - docker push $REPOSITORY_APARTMENTS_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_APARTMENTS_URI:$TAG" 
+
+      - docker push $REPOSITORY_ADVERTS_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_ADVERTS_URI:$TAG" 
+
+      - docker push $REPOSITORY_CARPOOL_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_CARPOOL_URI:$TAG" 
+
+      - docker push $REPOSITORY_CLASSIFIEDS_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_CLASSIFIEDS_URI:$TAG" 
+
+      - docker push $REPOSITORY_CONTACTS_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_CONTACTS_URI:$TAG" 
+
+      - docker push $REPOSITORY_PAYMENTS_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_PAYMENTS_URI:$TAG" 
+
+      - docker push $REPOSITORY_POLLING_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_POLLING_URI:$TAG" 
+
+      - docker push $REPOSITORY_USERS_URI:$TAG
+      - echo "Docker Image Push to ECR Completed -  $REPOSITORY_USERS_URI:$TAG"
       # Extracting AWS Credential Information using STS Assume Role for kubectl
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"          
       - CREDENTIALS=$(aws sts assume-role --role-arn $EKS_KUBECTL_ROLE_ARN --role-session-name codebuild-kubectl --duration-seconds 900)
@@ -53,16 +81,12 @@ phases:
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
       - export AWS_SESSION_TOKEN="$(echo ${CREDENTIALS} | jq -r '.Credentials.SessionToken')"
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
-
       # Setup kubectl with our EKS Cluster              
       - echo "Update Kube Config"      
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
-      
       # Apply changes to our Application using kubectl
       - echo "Apply changes to k8s"            
-      - kubectl apply -f infra/aws/withoutECR/k8s/00-rc-announcements-depl.yml
-      - kubectl apply -f infra/aws/withoutECR/k8s/99-ALB-Ingress.yml
-
+      - kubectl apply -f infra/aws/k8s/
       - echo "Completed applying changes to Kubernetes Objects"           
       # Create Artifacts which we can use if we want to continue our pipeline for other stages
       #- printf '[{"name":"01-DEVOPS-Nginx-Deployment.yml","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json
