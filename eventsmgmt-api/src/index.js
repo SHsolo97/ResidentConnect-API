@@ -2,6 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var cors = require('cors')
 
 const eventRouter = require('./routes/event');
 
@@ -9,6 +10,8 @@ const eventRouter = require('./routes/event');
 
 
 const app = express();
+
+app.use(cors()) 
 app.use(bodyParser.json());
 
 //app.set('trust proxy',true);
